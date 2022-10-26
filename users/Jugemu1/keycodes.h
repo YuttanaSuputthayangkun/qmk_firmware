@@ -33,6 +33,8 @@ typedef enum {
     TD_AUDIO = TD(TD_PLAY_MUTE),
 
     CK_MAIN_MOD,
+    CK_SECOND_MOD,
+
     CK_TG_COMBO,
 
     ARROW_SCLN = LT(ARROW_LAYER, KC_SCLN),         // LT(ARROW_LAYER, KC_SCLN)
@@ -40,6 +42,7 @@ typedef enum {
 } custom_keycode;
 
 #define CK_MM CK_MAIN_MOD
+#define CK_SM CK_SECOND_MOD
 #define CK_SWL CK_SWITCH_LANGUAGE
 #define CK_FPSCR CK_FULL_PRINT_SCREEN
 #define CK_PPSCR CK_PARTIAL_PRINT_SCREEN

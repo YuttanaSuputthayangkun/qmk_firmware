@@ -37,23 +37,46 @@ void press_release(uint16_t keycode, const keyrecord_t *record){
     }
 }
 
-void switch_language(bool is_pressed){
-    if (is_pressed){
-        register_code16(get_second_mod());
-        register_code16(KC_SPACE);
-    } else{
-        unregister_code16(KC_SPACE);
-        unregister_code16(get_second_mod());
+void tap_switch_language(void){
+    modes current_mode = get_mode();
+    switch(current_mode){
+        case MODE_WINDOWS:
+            tap_code16(KC_LGUI | KC_SPACE);
+            break;
+        case MODE_MAC:
+            tap_code16(KC_LCTL | KC_SPACE);
+            break;
+        default:
+            break;
     }
 }
 
-void tap_switch_language(void){
-    switch_language(true);
-    switch_language(false);
-}
-
 void switch_language_key_press(const keyrecord_t *record){
-    switch_language(record->event.pressed);
+    modes current_mode = get_mode();
+    switch(current_mode){
+        case MODE_WINDOWS:
+            if (record->event.pressed)
+            {
+                register_code16(KC_LGUI);
+                register_code16(KC_SPACE);
+            }else {
+                unregister_code16(KC_SPACE);
+                unregister_code16(KC_LGUI);
+            }
+            break;
+        case MODE_MAC:
+            if (record->event.pressed)
+            {
+                register_code16(KC_LCTL);
+                register_code16(KC_SPACE);
+            }else {
+                unregister_code16(KC_SPACE);
+                unregister_code16(KC_LCTL);
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 void print_full_screen_key_press(const keyrecord_t *record){
@@ -132,6 +155,9 @@ bool process_keycodes(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case CK_MAIN_MOD:
             press_release(get_main_mod(), record);
+            return false;
+        case CK_SECOND_MOD:
+            press_release(get_second_mod(), record);
             return false;
         case CK_SWITCH_LANGUAGE:
             switch_language_key_press(record);
