@@ -1,6 +1,7 @@
 #include "jugemu.h"
 #include "eeconfig.h"
 #include "eeprom.h"
+#include "tap_hold.h"
 
 typedef enum {
     // right
@@ -8,12 +9,12 @@ typedef enum {
     CMB_JL,
     CMB_KL,
     CMB_JI,
-    // CMB_JKL,
-    CMB_OSCLN,
-    CMB_O_ARROW_SCLN,
+    CMB_OSCLN,              // TODO: remove
+    CMB_TH_O_SCLN,
+    CMB_O_ARROW_SCLN,       // TDOO: remove
     CMB_IO,
-    // CMB_I_L_SCLN,
-    CMB_L_SCLN,
+    CMB_L_SCLN,             // TODO: remove
+    CMB_TH_L_SCLN,
     CMB_L_ARROW_SCLN,
 
     // left
@@ -24,7 +25,6 @@ typedef enum {
     CMB_SD,
     // CMB_AF,
     CMB_AS,
-    // CMB_ASE,
     CMB_AW,
     CMB_XC,
     CMB_CV,
@@ -36,12 +36,12 @@ const uint16_t PROGMEM cmb_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cmb_jl[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_ji[] = {KC_J, KC_I, COMBO_END};
-// const uint16_t PROGMEM cmb_jkl[] = {KC_J, KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_io[]   = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM cmb_oscln[]   = {KC_O, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM cmb_oscln[]   = {KC_O, KC_SCLN, COMBO_END};      // TODO: remove this
+const uint16_t PROGMEM cmb_th_o_scln[]   = {KC_O, TH(KC_SCLN), COMBO_END};
 const uint16_t PROGMEM cmb_o_arrow_scln[]   = {KC_O, ARROW_SCLN, COMBO_END};
-// const uint16_t PROGMEM cmb_i_l_scln[]   = {KC_I, KC_L, KC_SCLN, COMBO_END};
-const uint16_t PROGMEM cmb_l_scln[]   = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM cmb_l_scln[]   = {KC_L, KC_SCLN, COMBO_END};                 // TODO: remove
+const uint16_t PROGMEM cmb_th_l_scln[]   = {KC_L, TH(KC_SCLN), COMBO_END};
 const uint16_t PROGMEM cmb_l_arrow_scln[] = {KC_L, ARROW_SCLN, COMBO_END};
 
 // left
@@ -51,7 +51,6 @@ const uint16_t PROGMEM cmb_sr[]   = {KC_S, KC_R, COMBO_END};
 const uint16_t PROGMEM cmb_sf[]   = {KC_S, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_sd[]   = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_as[]   = {KC_A, KC_S, COMBO_END};
-// const uint16_t PROGMEM cmb_ase[]   = {KC_A, KC_S, KC_E, COMBO_END};
 // const uint16_t PROGMEM cmb_af[]   = {KC_A, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_aw[]   = {KC_A, KC_W, COMBO_END};
 const uint16_t PROGMEM cmb_xc[]   = {KC_X, KC_C, COMBO_END};
@@ -63,12 +62,12 @@ combo_t key_combos[] = {
     [CMB_JL] = COMBO(cmb_jl, KC_LALT),
     [CMB_KL] = COMBO(cmb_kl, KC_LGUI),
     [CMB_JI] = COMBO(cmb_ji, KC_RSFT),
-    // [CMB_JKL] = COMBO(cmb_jkl, KC_BSPC),
     [CMB_IO] = COMBO(cmb_io, KC_BSPC),
     [CMB_OSCLN] = COMBO(cmb_oscln, KC_ENT),
+    [CMB_TH_O_SCLN] = COMBO(cmb_th_o_scln, KC_ENT),
     [CMB_O_ARROW_SCLN] = COMBO(cmb_o_arrow_scln, KC_ENT),
-    // [CMB_I_L_SCLN] = COMBO(cmb_i_l_scln, CK_MAIN_MOD),     // TODO: change to CK_MAIN_MOD + SHIFT
-    [CMB_L_SCLN] = COMBO(cmb_l_scln, KC_BSPC),
+    [CMB_L_SCLN] = COMBO(cmb_l_scln, KC_BSPC),                  // TODO: remove this
+    [CMB_TH_L_SCLN] = COMBO(cmb_th_l_scln, KC_BSPC),
     [CMB_L_ARROW_SCLN] = COMBO(cmb_l_arrow_scln, KC_BSPC),
 
     // left
@@ -78,7 +77,6 @@ combo_t key_combos[] = {
     [CMB_SF] = COMBO(cmb_sf, KC_TAB),
     [CMB_SD] = COMBO(cmb_sd, KC_LGUI),
     [CMB_AS] = COMBO(cmb_as, CK_MAIN_MOD),
-    // [CMB_ASE] = COMBO(cmb_ase, CK_MAIN_MOD),            // TODO: change to CK_MAIN_MOD + SHIFT
     // [CMB_AF] = COMBO(cmb_af, KC_TAB),
     [CMB_AW] = COMBO(cmb_aw, KC_ESC),
     [CMB_XC] = COMBO(cmb_xc, KC_BSPC),

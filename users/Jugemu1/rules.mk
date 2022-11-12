@@ -1,6 +1,7 @@
 COMBO_ENABLE = yes
 TAP_DANCE_ENABLE = yes
-# TAP_HOLD_ENABLE = no
+
+# OLED_ENABLE = yes     # OLED display
 
 SRC += jugemu.c \
 	modes.c	\
@@ -17,6 +18,6 @@ ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
 	SRC += custom_tap_dance.c
 endif
 
-# ifeq ($(strip $(TAP_HOLD_ENABLE)), yes)
-# 	SRC += tap_hold.c
-# endif
+ifeq ($(strip $(TAP_HOLD_ENABLE)), yes)
+	SRC += tap_hold.c
+endif
