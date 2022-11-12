@@ -54,3 +54,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #undef ARROW_LAYER
 #define ARROW_LAYER 2
+
+#define OLED_BRIGHTNESS 64
