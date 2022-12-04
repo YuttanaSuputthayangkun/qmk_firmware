@@ -10,13 +10,12 @@ enum layer_number {
     _RAISE,
     _ADJUST,
     _GAME_GENSHIN,
-    _TEST_LAYER,
+    _GAME,
 };
 
-#define TG_TL TG(_TEST_LAYER)
-#define T_F LCTL_T(KC_F)
-#define T_A LCTL_T(KC_A)
-#define T_X LT(0,KC_X)
+#define T_BASE DF(_QWERTY)
+#define T_GENSH DF(_GAME_GENSHIN)
+#define T_GAME DF(_GAME)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -38,7 +37,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
     KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
     KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-    // KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,TH(KC_SCLN), KC_QUOT,
     KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
     KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                             KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
@@ -89,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* ADJUST
     * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+    * |      |      |      |      |      |      |                    |QWERTY|GENSHN| GAME |      |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
     * |      |      |insert| home | pgup |      |                    |      |  7   |  8   |   9  |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -102,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                   `----------------------------'           '------''--------------------'
     */
     [_ADJUST] = LAYOUT(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, XXXXXXX,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_DEL,  KC_END, KC_PGDN, XXXXXXX,                    KC_DOT, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, XXXXXXX, XXXXXXX,
@@ -131,12 +129,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  KC_LALT, KC_LCTL, KC_SPC, KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
     ),
 
-    [_TEST_LAYER] = LAYOUT(
-    TG_TL,      KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
-    KC_TAB,     KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-    KC_LCTL,     T_A,   KC_S,    KC_D,     T_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,    KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                            KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, TG_TL
+    /* GAME
+    * ,-----------------------------------------.                    ,-----------------------------------------.
+    * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * |LCTL  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+    * |------+------+------+------+------+------| MODE  |    |TG_GAME|------+------+------+------+------+------|
+    * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+    * `-----------------------------------------/       /     \      \-----------------------------------------'
+    *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| VOLU |
+    *                   |      |      |      |/       /         \      \ |      |      |      |
+    *                   `----------------------------'           '------''--------------------'
+    */
+
+    [_GAME] = LAYOUT(
+    KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                _______, _______,  _______,   _______,    KC_0,    KC_GRV,
+    KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,CK_TD_MODE, TG(_GAME_GENSHIN),     KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+                            KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
     ),
 };
 
@@ -179,6 +192,9 @@ const char *get_layer_name(void){
             break;
         case (1 << _GAME_GENSHIN):
             snprintf(layer_name_str, sizeof(layer_name_str), "Game Genshin");
+            break;
+        case (1 << _GAME):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Game");
             break;
         default:
             snprintf(layer_name_str, sizeof(layer_name_str), "Undef-%ld", layer_state);
