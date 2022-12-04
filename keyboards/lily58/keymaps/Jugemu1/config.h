@@ -44,6 +44,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SLEEP
 */
 
-// #define RENDER_LOGO
+#define IS_LEFT
 
-#define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
+#define RENDER_LOGO
+#define LOGO_START_DURATION 10000
+#define NO_LOGO_TIMEOUT
+
+// #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
+
+#undef ARROW_LAYER
+#define ARROW_LAYER 2
+
+#define OLED_BRIGHTNESS 64

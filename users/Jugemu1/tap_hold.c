@@ -1,6 +1,7 @@
 #include "tap_hold.h"
 #include "eeconfig.h"
 #include "eeprom.h"
+#include "keycodes.h"
 
 volatile bool tap_hold_status = false;
 
@@ -25,8 +26,7 @@ void init_tap_hold(void){
 }
 
 bool process_tap_hold(
-    uint16_t keycode,
-    keyrecord_t *record,
+    const keyrecord_t *record,
     uint16_t hold_keycode
 ){
     bool is_hold = record->tap.count == 0;
@@ -43,25 +43,51 @@ bool process_tap_hold(
     }
 }
 
+bool process_tap_layer_mo(
+    const keyrecord_t *record,
+    uint16_t layer
+){
+    bool is_hold = record->tap.count == 0;
+    if(is_hold){
+        if (record->event.pressed)
+        {
+            layer_on(layer);
+        } else{
+            layer_off(layer);
+        }
+        return false;
+    }else{
+        return true;
+    }
+}
+
 bool process_tap_hold_record(uint16_t keycode, keyrecord_t *record) {
+    // if(!tap_hold_enabled()){
+    //     return true;
+    // }
+
     switch(keycode){
-        // case KC_A:
-        //     return true;
-            // return process_tap_hold(KC_A, record, LT(ARROW_LAYER, KC_A));
-            // return process_tap_hold(KC_A, record, MO(ARROW_LAYER));
-            // return process_tap_hold(KC_A, record, KC_B);
 
-        // case LT(0, KC_N):
-        // // case KC_N:
-        //     if (record->tap.count && record->event.pressed) {
-        //         tap_code16(C(KC_C)); // Intercept tap function to send Ctrl-C
-        //         // tap_code16(KC_X);
-        //     } else if (record->event.pressed) {
-        //         tap_code16(C(KC_V)); // Intercept hold function to send Ctrl-V
-        //         // tap_code16(KC_C);
+        // case LT(0, KC_L):
+        //     if (!record->tap.count && record->event.pressed) {
+        //         tap_code16(KC_9); // Intercept hold function to send 9
+        //         return false;
         //     }
-        //     return false;
+        //     return true;             // Return true for normal processing of tap keycode
 
+        // case LT(0,KC_X):
+        //     if (!record->tap.count && record->event.pressed) {
+        //         tap_code16(C(KC_X)); // Intercept hold function to send Ctrl-X
+        //         return false;
+        //     }
+        //     return true;             // Return true for normal processing of tap keycode
+
+        case TH(KC_SCLN):
+            if(tap_hold_enabled() && !process_tap_layer_mo(record, ARROW_LAYER)){
+                return false;
+            }
+            press_release(KC_SCLN, record);
+            return false;
         default:
             return true;
     }

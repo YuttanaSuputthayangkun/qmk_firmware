@@ -150,7 +150,6 @@ bool process_keycodes(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!pre_process_record_user(keycode, record)){
@@ -158,11 +157,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
 #ifdef TAP_DANCE_ENABLE
-    if(tap_hold_enabled() && !process_tap_hold_record(keycode, record)){
+
+    if(!process_tap_hold_record(keycode, record)){
         return false;
     }
-#endif
 
+    // if(tap_hold_enabled() && !process_tap_hold_record(keycode, record)){
+    //     return false;
+    // }else{
+    //     if(keycode == TH(KC_SCLN)){
+    //         if (record->event.pressed)
+    //         {
+    //             register_code16(KC_SCLN);
+    //         }else {
+    //             unregister_code16(KC_SCLN);
+    //         }
+    //         return false;
+    //     }
+    // }
+#endif
     if (!process_keycodes(keycode, record)){
         return false;
     }

@@ -24,8 +24,9 @@ WPM_ENABLE = no
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
 	SRC += ./lib/keylogger.c
-			# ./lib/timelogger.c
+	SRC += ./lib/timelogger.c
 endif
+
 
 # SRC +=  ./lib/rgb_state_reader.c \
 #         ./lib/layer_state_reader.c \

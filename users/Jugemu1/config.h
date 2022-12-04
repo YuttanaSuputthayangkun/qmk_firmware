@@ -30,6 +30,8 @@
 #define EECONFIG_COMBO_INDEX (uint8_t *) 20
 #define EECONFIG_TAP_HOLD_INDEX (uint8_t *) 21
 
-#define ARROW_LAYER 3
+#define ARROW_LAYER 2
 
 #define TAP_HOLD_ENABLE
+
+#define ENABLE_CUSTOM_OLED_BY_DEFAULT
