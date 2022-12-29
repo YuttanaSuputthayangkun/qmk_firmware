@@ -11,11 +11,13 @@ enum layer_number {
     _ADJUST,
     _GAME_GENSHIN,
     _GAME,
+    _READING,
 };
 
 #define T_BASE DF(_QWERTY)
-#define T_GENSH DF(_GAME_GENSHIN)
-#define T_GAME DF(_GAME)
+#define T_GENSH TG(_GAME_GENSHIN)
+#define T_GAME TG(_GAME)
+#define T_READING TG(_READING)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -87,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* ADJUST
     * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |      |      |      |      |      |                    |QWERTY|GENSHN| GAME |      |      |      |
+    * |      |      |      |      |      |READIN|                    |QWERTY|GENSHN| GAME |      |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
     * |      |      |insert| home | pgup |      |                    |      |  7   |  8   |   9  |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -100,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                   `----------------------------'           '------''--------------------'
     */
     [_ADJUST] = LAYOUT(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,T_READING,                   T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, XXXXXXX,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_DEL,  KC_END, KC_PGDN, XXXXXXX,                    KC_DOT, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, XXXXXXX, XXXXXXX,
@@ -148,8 +150,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                _______, _______,  _______,   _______,    KC_0,    KC_GRV,
     KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
     KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
-    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,CK_TD_MODE, TG(_GAME_GENSHIN),     KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
-                            KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  CK_TD_MODE,        T_GAME,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+                              KC_LALT,   KC_LGUI,MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
+    ),
+
+    [_READING] = LAYOUT(
+    KC_ESC,     KC_HOME,XXXXXXX,     KC_END,    KC_4,      KC_5,                               _______, _______,  _______,   _______,    KC_0,    KC_GRV,
+    KC_TAB,     KC_PGUP,  KC_UP,    KC_PGDN,    KC_R,      KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,    KC_LEFT,KC_DOWN,   KC_RIGHT,    KC_F,      KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,       KC_C,    KC_V,    KC_ENT, CK_TD_MODE,      T_READING,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+                                    KC_LALT, KC_LGUI,MO(_LOWER),     KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
     ),
 };
 
@@ -196,8 +206,11 @@ const char *get_layer_name(void){
         case (1 << _GAME):
             snprintf(layer_name_str, sizeof(layer_name_str), "Game");
             break;
+        case (1 << _READING):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Reading");
+            break;
         default:
-            snprintf(layer_name_str, sizeof(layer_name_str), "Undef-%ld", layer_state);
+            snprintf(layer_name_str, sizeof(layer_name_str), "Undef-%d", layer_state);
             break;
     }
     return layer_name_str;
