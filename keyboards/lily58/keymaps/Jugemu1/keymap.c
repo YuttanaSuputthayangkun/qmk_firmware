@@ -12,12 +12,15 @@ enum layer_number {
     _GAME_GENSHIN,
     _GAME,
     _READING,
+    _EROGE,
+    _GAME_LOWER,
 };
 
 #define T_BASE DF(_QWERTY)
 #define T_GENSH TG(_GAME_GENSHIN)
 #define T_GAME TG(_GAME)
 #define T_READING TG(_READING)
+#define T_EROGE TG(_EROGE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -102,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                   `----------------------------'           '------''--------------------'
     */
     [_ADJUST] = LAYOUT(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,T_READING,                   T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, T_EROGE,T_READING,                   T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, XXXXXXX,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_DEL,  KC_END, KC_PGDN, XXXXXXX,                    KC_DOT, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, XXXXXXX, XXXXXXX,
@@ -158,8 +161,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,     KC_HOME,XXXXXXX,     KC_END,    KC_4,      KC_5,                               _______, _______,  _______,   _______,    KC_0,    KC_GRV,
     KC_TAB,     KC_PGUP,  KC_UP,    KC_PGDN,    KC_R,      KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
     KC_LCTL,    KC_LEFT,KC_DOWN,   KC_RIGHT,    KC_F,      KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
-    KC_LSFT,       KC_Z,   KC_X,       KC_C,    KC_V,    KC_ENT, CK_TD_MODE,      T_READING,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+    KC_LSFT,       KC_Z,   KC_X,       KC_C,    KC_V,    KC_ENT,  T_READING,      T_READING,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
                                     KC_LALT, KC_LGUI,MO(_LOWER),     KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
+    ),
+
+    [_EROGE] = LAYOUT(
+    _______,    _______,  _______,   KC_VOLD,    KC_VOLU,      KC_MUTE,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,    T_EROGE,        T_EROGE,       _______,    _______,    _______,    _______,    _______,    _______,
+                                    _______, _______,  MO(_GAME_LOWER),     KC_ENT,         _______, _______, _______, _______
+    ),
+
+    [_GAME_LOWER] = LAYOUT(
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,    KC_UP,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    KC_LEFT,  KC_DOWN,  KC_RIGHT,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,    _______,        _______,       _______,    _______,    _______,    _______,    _______,    _______,
+                                     _______,    _______,      _______,    _______,        _______,       _______,    _______,    _______
     ),
 };
 
@@ -208,6 +227,9 @@ const char *get_layer_name(void){
             break;
         case (1 << _READING):
             snprintf(layer_name_str, sizeof(layer_name_str), "Reading");
+            break;
+        case (1 << _EROGE):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Eroge");
             break;
         default:
             snprintf(layer_name_str, sizeof(layer_name_str), "Undef-%d", layer_state);
