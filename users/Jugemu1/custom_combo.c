@@ -28,6 +28,12 @@ typedef enum {
     CMB_AW,
     CMB_XC,
     CMB_CV,
+    CMB_WR,
+    CMB_WF,
+    CMB_QZ,
+    CMB_ZW,
+    CMB_WT,
+    CMB_WG,
 
 } custom_combos;
 
@@ -55,6 +61,12 @@ const uint16_t PROGMEM cmb_as[]   = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_aw[]   = {KC_A, KC_W, COMBO_END};
 const uint16_t PROGMEM cmb_xc[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM cmb_cv[]   = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM cmb_wr[]   = {KC_W, KC_R, COMBO_END};
+const uint16_t PROGMEM cmb_wf[]   = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM cmb_qz[]   = {KC_Q, KC_Z, COMBO_END};
+const uint16_t PROGMEM cmb_zw[]   = {KC_Z, KC_W, COMBO_END};
+const uint16_t PROGMEM cmb_wt[]   = {KC_W, KC_T, COMBO_END};
+const uint16_t PROGMEM cmb_wg[]   = {KC_W, KC_G, COMBO_END};
 
 combo_t key_combos[] = {
     // right
@@ -81,6 +93,12 @@ combo_t key_combos[] = {
     [CMB_AW] = COMBO(cmb_aw, KC_ESC),
     [CMB_XC] = COMBO(cmb_xc, KC_BSPC),
     [CMB_CV] = COMBO(cmb_cv, KC_ENT),
+    [CMB_WR] = COMBO(cmb_wr, KC_PGUP),
+    [CMB_WF] = COMBO(cmb_wf, KC_PGDN),
+    [CMB_QZ] = COMBO(cmb_qz, KC_INSERT),
+    [CMB_ZW] = COMBO(cmb_zw, KC_DEL),
+    [CMB_WT] = COMBO(cmb_wt, KC_HOME),
+    [CMB_WG] = COMBO(cmb_wg, KC_END),
 };
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
@@ -115,6 +133,16 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo){
         case CMB_CV:
             return 50;
 
+        // left
+        case CMB_WR:
+        case CMB_WF:
+        case CMB_QZ:
+        case CMB_ZW:
+        case CMB_WT:
+        case CMB_WG:
+            return 30;
+
+        // right
         case CMB_L_SCLN:
         case CMB_OSCLN:
             return 80;
