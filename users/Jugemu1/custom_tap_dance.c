@@ -7,14 +7,14 @@
     #include "tap_hold.h"
 #endif
 
-void dance_mo1(qk_tap_dance_state_t *state, void *user_data){
+void dance_mo1(tap_dance_state_t *state, void *user_data){
     if (state->count >= 4) {
         combo_toggle();
         reset_tap_dance(state);
     }
 }
 
-void dance_modes(qk_tap_dance_state_t *state, void *user_data){
+void dance_modes(tap_dance_state_t *state, void *user_data){
     if(!state->finished) return;
     switch(state->count){
         case 1:
@@ -36,7 +36,7 @@ void dance_modes(qk_tap_dance_state_t *state, void *user_data){
     }
 }
 
-void dance_enter_delete(qk_tap_dance_state_t *state, void *user_data){
+void dance_enter_delete(tap_dance_state_t *state, void *user_data){
     if(!state->finished) return;
     switch(state->count){
         case 1:
@@ -48,7 +48,7 @@ void dance_enter_delete(qk_tap_dance_state_t *state, void *user_data){
     }
 }
 
-void dance_audio(qk_tap_dance_state_t *state, void *user_data){
+void dance_audio(tap_dance_state_t *state, void *user_data){
     if(!state->finished) return;
     switch(state->count){
         case 1:
@@ -66,7 +66,7 @@ void dance_audio(qk_tap_dance_state_t *state, void *user_data){
     }
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_MODE] = ACTION_TAP_DANCE_FN(dance_modes),
     [TD_PLAY_MUTE] = ACTION_TAP_DANCE_FN(dance_audio),
     [TD_LCTL_F1] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_F1),      // this doesn't work for unknown reason
