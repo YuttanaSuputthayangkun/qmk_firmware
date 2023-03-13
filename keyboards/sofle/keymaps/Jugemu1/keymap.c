@@ -1,89 +1,38 @@
 #include QMK_KEYBOARD_H
 
+#include "jugemu.h"
+#include <stdio.h>
+#include "custom_combo.h"
+#include "tap_hold.h"
+
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
-    _COLEMAK,
     _LOWER,
     _RAISE,
     _ADJUST,
+    _GAME_GENSHIN,
+    _GAME,
+    _READING,
+    _EROGE,
+    _GAME_LOWER,
 };
 
-enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_COLEMAK,
-    KC_LOWER,
-    KC_RAISE,
-    KC_ADJUST,
-    KC_PRVWD,
-    KC_NXTWD,
-    KC_LSTRT,
-    KC_LEND,
-    KC_DLINE
-};
-
+#define T_BASE DF(_QWERTY)
+#define T_GENSH TG(_GAME_GENSHIN)
+#define T_GAME TG(_GAME)
+#define T_READING TG(_READING)
+#define T_EROGE TG(_EROGE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/*
- * QWERTY
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  | Bspc |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
 
-[_QWERTY] = LAYOUT(
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
-  KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
-  KC_TAB,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
-                 KC_LGUI,KC_LALT,KC_LCTRL, KC_LOWER, KC_ENT,      KC_SPC,  KC_RAISE, KC_RCTRL, KC_RALT, KC_RGUI
-),
-/*
- * COLEMAK
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |   ;  | Bspc |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | TAB  |   A  |   R  |   S  |   T  |   D  |-------.    ,-------|   H  |   N  |   E  |   I  |   O  |  '   |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   K  |   M  |   ,  |   .  |   /  |RShift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-
-[_COLEMAK] = LAYOUT(
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
-  KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_G,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_BSPC,
-  KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,    KC_D,                      KC_H,    KC_N,    KC_E,    KC_I,    KC_O,  KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,      XXXXXXX,KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
-                 KC_LGUI,KC_LALT,KC_LCTRL,KC_LOWER, KC_ENT,      KC_SPC,  KC_RAISE, KC_RCTRL, KC_RALT, KC_RGUI
-),
-/* LOWER
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | F12  |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   |  |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | Shift|  =   |  -   |  +   |   {  |   }  |-------|    |-------|   [  |   ]  |   ;  |   :  |   \  | Shift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
+    [_QWERTY] = LAYOUT(
+    KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,
+    KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,    KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
+                      KC_LALT, CK_TD_MODE, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
+    ),
 [_LOWER] = LAYOUT(
   _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_F12,
@@ -91,61 +40,265 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  KC_EQL, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS, _______,
                        _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
-/* RAISE
- * ,----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Esc  | Ins  | Pscr | Menu |      |      |                    |      | PWrd |  Up  | NWrd | DLine| Bspc |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  | LAt  | LCtl |LShift|      | Caps |-------.    ,-------|      | Left | Down | Rigth|  Del | Bspc |
- * |------+------+------+------+------+------|  MUTE  |    |       |------+------+------+------+------+------|
- * |Shift | Undo |  Cut | Copy | Paste|      |-------|    |-------|      | LStr |      | LEnd |      | Shift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-[_RAISE] = LAYOUT(
-  _______, _______ , _______ , _______ , _______ , _______,                           _______,  _______  , _______,  _______ ,  _______ ,_______,
-  _______,  KC_INS,  KC_PSCR,   KC_APP,  XXXXXXX, XXXXXXX,                        KC_PGUP, KC_PRVWD,   KC_UP, KC_NXTWD,KC_DLINE, KC_BSPC,
-  _______, KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX, KC_CAPS,                       KC_PGDN,  KC_LEFT, KC_DOWN, KC_RGHT,  KC_DEL, KC_BSPC,
-  _______,KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,       _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX, _______,
-                         _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
-),
-/* ADJUST
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | QK_BOOT|      |QWERTY|COLEMAK|      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |MACWIN|      |      |      |-------.    ,-------|      | VOLDO| MUTE | VOLUP|      |      |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      | PREV | PLAY | NEXT |      |      |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-  [_ADJUST] = LAYOUT(
-  XXXXXXX , XXXXXXX,  XXXXXXX ,  XXXXXXX , XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  QK_BOOT  , XXXXXXX,KC_QWERTY,KC_COLEMAK,CG_TOGG,XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX , XXXXXXX,CG_TOGG, XXXXXXX,    XXXXXXX,  XXXXXXX,                     XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX, XXXXXXX,
-  XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, XXXXXXX,
-                   _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
-  )
+    [_LOWER] = LAYOUT(
+    _______,          KC_VOLD, KC_VOLU,TD_AUDIO, _______, _______,                   _______, _______, _______,_______, _______, _______,
+    KC_F1,              KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+    TD(TD_LCTL_GRV),  KC_EXLM,   KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD,
+    _______,          _______, _______, _______, _______, _______, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
+                               _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______
+    ),
+    [_RAISE] = LAYOUT(
+    _______,         _______, _______, _______, _______, _______,                       KC_VOLD, KC_VOLU,TD_AUDIO,CK_PPSCR,  CK_FPSCR,  KC_DEL,
+    KC_GRV,             KC_1,     KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,      KC_0, KC_VOLU,
+    TD(TD_RCTL_F1),    KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                      KC_LEFT, KC_DOWN,   KC_UP,   KC_RGHT, _______, KC_VOLD,
+    TD(TD_LSFT_F7),    KC_F8,    KC_F9,  KC_F10,  KC_F11,  KC_F12,   _______, _______,  KC_PLUS, KC_MINS,  KC_EQL, KC_LBRC,   KC_RBRC, KC_BSLS,
+                              _______,  _______, _______, _______,   _______, _______,  _______, _______, _______, _______
+    ),
+    [_ADJUST] = LAYOUT(
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, T_EROGE,T_READING,                   T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, XXXXXXX,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX,  KC_DEL,  KC_END, KC_PGDN, XXXXXXX,                    KC_DOT, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, XXXXXXX, XXXXXXX,
+                      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+    [_GAME_GENSHIN] = LAYOUT(
+    KC_ESC,    KC_1,   KC_2,    KC_3,    KC_4,    KC_M,                                  KC_VOLD,    KC_VOLU,TD_AUDIO,    KC_9,   CK_FPSCR,   TD_AUDIO,
+    KC_TAB,    KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                  KC_Y,    KC_U,    KC_I,    KC_O,       KC_P,    KC_VOLU,
+    KC_LALT,   KC_A,   KC_S,    KC_D,    KC_F,    KC_J,                                  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,    KC_VOLD,
+    KC_LSFT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE,   TG(_GAME_GENSHIN), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    KC_RSFT,
+                    KC_LALT, KC_LALT, KC_LCTL, KC_SPC, KC_SPC,             KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
+    ),
+
+    [_GAME] = LAYOUT(
+    KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                _______, _______,  _______,   _______,    KC_0,    KC_GRV,
+    KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  CK_TD_MODE,        T_GAME,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+                        KC_LALT, KC_LALT,   KC_LGUI,MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_BSPC, KC_RGUI
+    ),
+
+    [_READING] = LAYOUT(
+    KC_ESC,     KC_HOME,XXXXXXX,     KC_END,    KC_4,      KC_5,                               _______, _______,  _______,   _______,    KC_0,    KC_GRV,
+    KC_TAB,     KC_PGUP,  KC_UP,    KC_PGDN,    KC_R,      KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,    KC_LEFT,KC_DOWN,   KC_RIGHT,    KC_F,      KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,       KC_C,    KC_V,    KC_ENT,  T_READING,      T_READING,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
+                        KC_LALT,   KC_LALT, KC_LGUI, MO(_LOWER),     KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC,  KC_BSPC, KC_RGUI
+    ),
+
+    [_EROGE] = LAYOUT(
+    _______,    _______,  _______,   KC_VOLD,    KC_VOLU,      KC_MUTE,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,    T_EROGE,        T_EROGE,       _______,    _______,    _______,    _______,    _______,    _______,
+                          _______,   _______,    _______,  MO(_GAME_LOWER),  KC_ENT,         _______,     _______,    _______,    _______,    _______
+    ),
+
+    [_GAME_LOWER] = LAYOUT(
+    _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,    KC_UP,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    KC_LEFT,  KC_DOWN,  KC_RIGHT,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
+    _______,    _______,  _______,   _______,    _______,      _______,    _______,        _______,       _______,    _______,    _______,    _______,    _______,    _______,
+                          _______,   _______,    _______,      _______,    _______,        _______,       _______,    _______,    _______,    _______
+    )
 };
 
 #ifdef OLED_ENABLE
 
-static void render_logo(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-        0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-        0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
-    };
+#ifdef RENDER_LOGO
 
-    oled_write_P(qmk_logo, false);
+void oled_render_logo(void) {
+    static const char PROGMEM my_logo[] = {
+
+#ifdef IS_LEFT
+
+// 'ougi1 - left', 128x32px
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0x1f, 0x3f, 0xff, 0xff, 0xff, 0x7f, 0x3f, 0x1f, 0x0f, 0x07,
+0x83, 0xc1, 0xe0, 0xf0, 0xf8, 0xfc, 0xfc, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xe0, 0xc0,
+0xc0, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xc0, 0xe0, 0xf8, 0xfc, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x7f, 0x7f, 0x7f,
+0x7f, 0x3f, 0x3f, 0x3f, 0x3e, 0x3e, 0x3c, 0x00, 0x38, 0x38, 0x30, 0x30, 0x30, 0x20, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xe0, 0xf8, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0x3f, 0x83, 0xf3, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xfe, 0xcc, 0xec, 0xe0, 0xf0, 0xf0, 0xf0, 0xe0, 0xe0,
+0xc0, 0xc0, 0xc0, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0xe0, 0xf8, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0x03, 0xf0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf9, 0xf1, 0xe1, 0xc1, 0x81, 0x01, 0x01, 0x01, 0x01,
+0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
+0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+#else           //else IS_LEFT
+
+// 'ougi1 - right', 128x32px
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0xc0,
+0xc0, 0xe0, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xfc, 0xfc, 0xf8, 0xf0, 0xe0, 0xc1, 0x83,
+0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff, 0xff, 0xff, 0x3f, 0x1f, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x20, 0x30, 0x30, 0x30, 0x38, 0x38, 0x00, 0x3c, 0x3e, 0x3e, 0x3f, 0x3f, 0x3f, 0x7f,
+0x7f, 0x7f, 0x7f, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xfc, 0xf8, 0xe0, 0xc0, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0xc0, 0xc0, 0xc0,
+0xe0, 0xe0, 0xf0, 0xf0, 0xf0, 0xe0, 0xec, 0xcc, 0xfe, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf3, 0x83, 0x3f, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xf8, 0xe0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01,
+0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
+0x01, 0x01, 0x01, 0x01, 0x81, 0xc1, 0xe1, 0xf1, 0xf9, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xf0, 0x03, 0xff, 0xff, 0xff,
+0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xf8, 0xe0, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+#endif          // end IS_LEFT
+    };
+    oled_write_raw_P(my_logo, sizeof(my_logo));
 }
+
+uint16_t logo_timer = 0;
+bool is_rendering_logo = false;
+
+void reset_logo_timer(void){
+    logo_timer = timer_read();
+    is_rendering_logo = false;
+}
+
+bool try_render_logo(void){
+    if (
+        is_rendering_logo                                       // if it's rendering, keep do it without checking time
+        || timer_elapsed(logo_timer) > LOGO_START_DURATION
+    ) {
+#ifdef NO_LOGO_TIMEOUT
+        oled_clear();
+#endif
+        oled_render_logo();
+        is_rendering_logo = true;
+        return true;
+    }
+    return false;
+}
+#endif   // RENDER_LOGO
+
+#define LINE_SIZE 24
+
+const char *get_layer_name(void){
+    static char layer_name_str[24];
+    switch(layer_state){
+        case _QWERTY:
+            snprintf(layer_name_str, sizeof(layer_name_str), "Default");
+            break;
+        case (1 << _LOWER):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Lower");
+            break;
+        case (1 << _RAISE):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Raise");
+            break;
+        case (1 << _ADJUST):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Adjust");
+            break;
+        case (1 << _GAME_GENSHIN):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Game Genshin");
+            break;
+        case (1 << _GAME):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Game");
+            break;
+        case (1 << _READING):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Reading");
+            break;
+        case (1 << _EROGE):
+            snprintf(layer_name_str, sizeof(layer_name_str), "Eroge");
+            break;
+        default:
+            snprintf(layer_name_str, sizeof(layer_name_str), "Undef-%d", layer_state);
+            break;
+    }
+    return layer_name_str;
+}
+
+void write_layer_ln(void){
+    static char layer_line[LINE_SIZE];
+    const char *layer_name = get_layer_name();
+    snprintf(
+        layer_line,
+        LINE_SIZE,
+        "Layer : %s",
+        layer_name
+    );
+    oled_write_ln(layer_line, false);
+}
+
+bool try_write_combo_ln(void){
+    static char combo_line[LINE_SIZE];
+    bool is_enabled = is_combo_enabled();
+    if (is_enabled) {
+        snprintf(
+            combo_line,
+            sizeof(combo_line),
+            "Combo : Enabled"
+        );
+        oled_write_ln(combo_line, false);
+    }
+    return is_enabled;
+}
+
+bool try_write_tap_hold_ln(void){
+    static char tap_hold_line[LINE_SIZE];
+    bool is_enabled = tap_hold_enabled();
+    if (is_enabled) {
+        snprintf(
+            tap_hold_line,
+            sizeof(tap_hold_line),
+            "TapHold : Enabled"
+        );
+        oled_write_ln(tap_hold_line, false);
+    }
+    return is_enabled;
+}
+
+const char *read_mode_name(void){
+    static char mode_name_line[LINE_SIZE];
+    snprintf(
+        mode_name_line,
+        sizeof(mode_name_line),
+        "Mode : %s",
+        get_current_mode_name()
+    );
+    return mode_name_line;
+}
+
+#ifdef NARROW_DISPLAY
 
 static void print_status_narrow(void) {
     // Print current mode
@@ -162,9 +315,6 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
             break;
-        case _COLEMAK:
-            oled_write_ln_P(PSTR("Clmk"), false);
-            break;
         default:
             oled_write_P(PSTR("Undef"), false);
     }
@@ -172,7 +322,6 @@ static void print_status_narrow(void) {
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
-        case _COLEMAK:
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
@@ -193,188 +342,69 @@ static void print_status_narrow(void) {
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
 }
 
+#endif   // NARROW_DISPLAY
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
-        return OLED_ROTATION_270;
-    }
-    return rotation;
+  if (!is_keyboard_master())
+    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  return rotation;
 }
+
+#define MAX_LINE 4
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        print_status_narrow();
-    } else {
-        render_logo();
+
+#ifdef RENDER_LOGO
+        if(try_render_logo()){
+            return false;
+        }
+#endif
+
+        oled_clear();
+
+        int lines = 0;
+
+        write_layer_ln();
+        lines += 1;
+
+        oled_write_ln(read_mode_name(), false);
+        lines += 1;
+
+        if(try_write_combo_ln()) {
+            lines += 1;
+        }
+
+        if(try_write_tap_hold_ln()){
+            lines += 1;
+        }
+
+#ifdef SET_KEYLOG
+        if(lines < MAX_LINE) {
+            oled_write_ln(read_keylog(), false);
+            lines += 1;
+        }
+
+        if(lines < MAX_LINE) {
+            oled_write_ln(read_keylogs(), false);
+            lines += 1;
+        }
+#endif
     }
+    else {
+#ifdef RENDER_LOGO
+#ifdef NO_LOGO_TIMEOUT
+        oled_clear();
+#endif
+        oled_render_logo();
+#endif
+        return true;
+    }
+
     return false;
 }
 
-#endif
-
-bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
-    return true;
-}
-
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case KC_QWERTY:
-//             if (record->event.pressed) {
-//                 set_single_persistent_default_layer(_QWERTY);
-//             }
-//             return false;
-//         case KC_COLEMAK:
-//             if (record->event.pressed) {
-//                 set_single_persistent_default_layer(_COLEMAK);
-//             }
-//             return false;
-//         case KC_LOWER:
-//             if (record->event.pressed) {
-//                 layer_on(_LOWER);
-//                 update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//             } else {
-//                 layer_off(_LOWER);
-//                 update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//             }
-//             return false;
-//         case KC_RAISE:
-//             if (record->event.pressed) {
-//                 layer_on(_RAISE);
-//                 update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//             } else {
-//                 layer_off(_RAISE);
-//                 update_tri_layer(_LOWER, _RAISE, _ADJUST);
-//             }
-//             return false;
-//         case KC_ADJUST:
-//             if (record->event.pressed) {
-//                 layer_on(_ADJUST);
-//             } else {
-//                 layer_off(_ADJUST);
-//             }
-//             return false;
-//         case KC_PRVWD:
-//             if (record->event.pressed) {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     register_mods(mod_config(MOD_LALT));
-//                     register_code(KC_LEFT);
-//                 } else {
-//                     register_mods(mod_config(MOD_LCTL));
-//                     register_code(KC_LEFT);
-//                 }
-//             } else {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     unregister_mods(mod_config(MOD_LALT));
-//                     unregister_code(KC_LEFT);
-//                 } else {
-//                     unregister_mods(mod_config(MOD_LCTL));
-//                     unregister_code(KC_LEFT);
-//                 }
-//             }
-//             break;
-//         case KC_NXTWD:
-//              if (record->event.pressed) {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     register_mods(mod_config(MOD_LALT));
-//                     register_code(KC_RIGHT);
-//                 } else {
-//                     register_mods(mod_config(MOD_LCTL));
-//                     register_code(KC_RIGHT);
-//                 }
-//             } else {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     unregister_mods(mod_config(MOD_LALT));
-//                     unregister_code(KC_RIGHT);
-//                 } else {
-//                     unregister_mods(mod_config(MOD_LCTL));
-//                     unregister_code(KC_RIGHT);
-//                 }
-//             }
-//             break;
-//         case KC_LSTRT:
-//             if (record->event.pressed) {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                      //CMD-arrow on Mac, but we have CTL and GUI swapped
-//                     register_mods(mod_config(MOD_LCTL));
-//                     register_code(KC_LEFT);
-//                 } else {
-//                     register_code(KC_HOME);
-//                 }
-//             } else {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     unregister_mods(mod_config(MOD_LCTL));
-//                     unregister_code(KC_LEFT);
-//                 } else {
-//                     unregister_code(KC_HOME);
-//                 }
-//             }
-//             break;
-//         case KC_LEND:
-//             if (record->event.pressed) {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     //CMD-arrow on Mac, but we have CTL and GUI swapped
-//                     register_mods(mod_config(MOD_LCTL));
-//                     register_code(KC_RIGHT);
-//                 } else {
-//                     register_code(KC_END);
-//                 }
-//             } else {
-//                 if (keymap_config.swap_lctl_lgui) {
-//                     unregister_mods(mod_config(MOD_LCTL));
-//                     unregister_code(KC_RIGHT);
-//                 } else {
-//                     unregister_code(KC_END);
-//                 }
-//             }
-//             break;
-//         case KC_DLINE:
-//             if (record->event.pressed) {
-//                 register_mods(mod_config(MOD_LCTL));
-//                 register_code(KC_BSPC);
-//             } else {
-//                 unregister_mods(mod_config(MOD_LCTL));
-//                 unregister_code(KC_BSPC);
-//             }
-//             break;
-//         case KC_COPY:
-//             if (record->event.pressed) {
-//                 register_mods(mod_config(MOD_LCTL));
-//                 register_code(KC_C);
-//             } else {
-//                 unregister_mods(mod_config(MOD_LCTL));
-//                 unregister_code(KC_C);
-//             }
-//             return false;
-//         case KC_PASTE:
-//             if (record->event.pressed) {
-//                 register_mods(mod_config(MOD_LCTL));
-//                 register_code(KC_V);
-//             } else {
-//                 unregister_mods(mod_config(MOD_LCTL));
-//                 unregister_code(KC_V);
-//             }
-//             return false;
-//         case KC_CUT:
-//             if (record->event.pressed) {
-//                 register_mods(mod_config(MOD_LCTL));
-//                 register_code(KC_X);
-//             } else {
-//                 unregister_mods(mod_config(MOD_LCTL));
-//                 unregister_code(KC_X);
-//             }
-//             return false;
-//             break;
-//         case KC_UNDO:
-//             if (record->event.pressed) {
-//                 register_mods(mod_config(MOD_LCTL));
-//                 register_code(KC_Z);
-//             } else {
-//                 unregister_mods(mod_config(MOD_LCTL));
-//                 unregister_code(KC_Z);
-//             }
-//             return false;
-//     }
-//     return true;
-// }
+#endif   // OLED_ENABLE
 
 #ifdef ENCODER_ENABLE
 
@@ -387,7 +417,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code(KC_PGDOWN);
+            tap_code(KC_PGDN);
         } else {
             tap_code(KC_PGUP);
         }
@@ -396,3 +426,44 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 #endif
+
+static bool combo_status_before_game_layer;
+
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
+#ifdef OLED_ENABLE
+#ifdef SET_KEYLOG
+    set_keylog(keycode, record);
+#endif
+
+#ifdef RENDER_LOGO
+    reset_logo_timer();
+#endif
+#endif
+
+    if (record->event.pressed) {
+        switch (keycode){
+            case TG(_GAME_GENSHIN):
+                {
+                    if (IS_LAYER_ON(_GAME_GENSHIN))
+                    {
+                        // restore combo status
+                        set_custom_combo_enable(combo_status_before_game_layer);
+                    } else {
+                        // save combo status prior to entering game mode
+                        combo_status_before_game_layer = is_custom_combo_enabled();
+                        // disable combo
+                        set_custom_combo_enable(false);
+                    }
+                }
+                return false;
+            default:
+                break;
+        }
+    }
+
+    return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}

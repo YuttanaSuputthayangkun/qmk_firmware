@@ -16,6 +16,7 @@ typedef enum {
     CMB_L_SCLN,             // TODO: remove
     CMB_TH_L_SCLN,
     CMB_L_ARROW_SCLN,
+    CMB_H_J,
 
     // left
     CMB_DF,
@@ -49,6 +50,7 @@ const uint16_t PROGMEM cmb_o_arrow_scln[]   = {KC_O, ARROW_SCLN, COMBO_END};
 const uint16_t PROGMEM cmb_l_scln[]   = {KC_L, KC_SCLN, COMBO_END};                 // TODO: remove
 const uint16_t PROGMEM cmb_th_l_scln[]   = {KC_L, TH(KC_SCLN), COMBO_END};
 const uint16_t PROGMEM cmb_l_arrow_scln[] = {KC_L, ARROW_SCLN, COMBO_END};
+const uint16_t PROGMEM cmb_h_j[] = {KC_H, KC_J, COMBO_END};
 
 // left
 const uint16_t PROGMEM cmb_df[]   = {KC_D, KC_F, COMBO_END};
@@ -81,6 +83,7 @@ combo_t key_combos[] = {
     [CMB_L_SCLN] = COMBO(cmb_l_scln, KC_BSPC),                  // TODO: remove this
     [CMB_TH_L_SCLN] = COMBO(cmb_th_l_scln, KC_BSPC),
     [CMB_L_ARROW_SCLN] = COMBO(cmb_l_arrow_scln, KC_BSPC),
+    [CMB_H_J] = COMBO(cmb_h_j, KC_LSFT),
 
     // left
     [CMB_DF] = COMBO(cmb_df, KC_LCTL),
