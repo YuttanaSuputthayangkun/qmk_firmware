@@ -33,13 +33,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
                       KC_LALT, CK_TD_MODE, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
     ),
-[_LOWER] = LAYOUT(
-  _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
-  KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_F12,
-  _______, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                       KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
-  _______,  KC_EQL, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS, _______,
-                       _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
-),
     [_LOWER] = LAYOUT(
     _______,          KC_VOLD, KC_VOLU,TD_AUDIO, _______, _______,                   _______, _______, _______,_______, _______, _______,
     KC_F1,              KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
@@ -107,11 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RENDER_LOGO
 
-void oled_render_logo(void) {
+void oled_render_logo_left(void){
     static const char PROGMEM my_logo[] = {
-
-#ifdef IS_LEFT
-
 // 'ougi1 - left', 128x32px
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -145,9 +135,12 @@ void oled_render_logo(void) {
 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+    oled_write_raw_P(my_logo, sizeof(my_logo));
+}
 
-#else           //else IS_LEFT
-
+void oled_render_logo_right(void){
+    static const char PROGMEM my_logo[] = {
 // 'ougi1 - right', 128x32px
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0xc0,
@@ -181,10 +174,19 @@ void oled_render_logo(void) {
 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xf8, 0xe0, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-#endif          // end IS_LEFT
-    };
+};
     oled_write_raw_P(my_logo, sizeof(my_logo));
+}
+
+void oled_render_logo(void) {
+    bool is_left = is_keyboard_master();
+    if(is_left){
+        oled_render_logo_left();
+    }
+    else
+    {
+        oled_render_logo_left();
+    }
 }
 
 uint16_t logo_timer = 0;
@@ -411,15 +413,15 @@ bool oled_task_user(void) {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
             tap_code(KC_VOLD);
+        } else {
+            tap_code(KC_VOLU);
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
             tap_code(KC_PGUP);
+        } else {
+            tap_code(KC_PGDN);
         }
     }
     return true;
