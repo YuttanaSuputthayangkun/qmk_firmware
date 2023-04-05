@@ -30,8 +30,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                                KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,
     KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
     KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,    KC_QUOT,
-    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
-                      KC_LALT, CK_TD_MODE, KC_LGUI, MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE, TG(_GAME_GENSHIN), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_PIPE,
+                      KC_LALT, KC_BTN1, KC_LGUI, MO(_LOWER), KC_SPC,          KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
     ),
     [_LOWER] = LAYOUT(
     _______,          KC_WBAK, KC_WFWD,  KC_WH_L, KC_WH_R, _______,                   _______, _______, _______,_______, _______, _______,
@@ -58,8 +58,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,    KC_1,   KC_2,    KC_3,    KC_4,    KC_M,                                  KC_VOLD,    KC_VOLU,TD_AUDIO,    KC_9,   CK_FPSCR,   TD_AUDIO,
     KC_TAB,    KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                  KC_Y,    KC_U,    KC_I,    KC_O,       KC_P,    KC_VOLU,
     KC_LALT,   KC_A,   KC_S,    KC_D,    KC_F,    KC_J,                                  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,    KC_VOLD,
-    KC_LSFT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, CK_TD_MODE,   TG(_GAME_GENSHIN), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    KC_RSFT,
-                    KC_LALT, KC_LALT, KC_LCTL, KC_SPC, KC_SPC,             KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
+    KC_LSFT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, T_GENSH,                T_GENSH, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,    KC_RSFT,
+                    _______, _______, KC_LCTL, KC_SPC, MO(_LOWER),         KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_RGUI
     ),
 
     [_GAME] = LAYOUT(
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
     KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
     KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  CK_TD_MODE,        T_GAME,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
-                        KC_LALT, KC_LALT,   KC_LGUI,MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_BSPC, KC_RGUI
+                        _______, _______,   KC_LGUI,MO(_LOWER), KC_SPC,            KC_ENT, MO(_RAISE), KC_BSPC, KC_BSPC, KC_RGUI
     ),
 
     [_READING] = LAYOUT(
@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,     KC_PGUP,  KC_UP,    KC_PGDN,    KC_R,      KC_T,                                   KC_Y,    KC_U,    KC_UP,      KC_O,    KC_P,    KC_MINS,
     KC_LCTL,    KC_LEFT,KC_DOWN,   KC_RIGHT,    KC_F,      KC_G,                                   KC_H, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_SCLN, KC_QUOT,
     KC_LSFT,       KC_Z,   KC_X,       KC_C,    KC_V,    KC_ENT,  T_READING,      T_READING,       KC_N,    KC_M,  KC_COMM,    KC_DOT, KC_SLSH, KC_RSFT,
-                        KC_LALT,   KC_LALT, KC_LGUI, MO(_LOWER),     KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC,  KC_BSPC, KC_RGUI
+                        _______,   _______, KC_LGUI, MO(_LOWER),     KC_SPC,         KC_ENT, MO(_RAISE), KC_BSPC,  KC_BSPC, KC_RGUI
     ),
 
     [_EROGE] = LAYOUT(
@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
     _______,    _______,  _______,   _______,    _______,      _______,    T_EROGE,        T_EROGE,       _______,    _______,    _______,    _______,    _______,    _______,
-                          _______,   _______,    _______,  MO(_GAME_LOWER),  KC_ENT,         _______,     _______,    _______,    _______,    _______
+                          _______,   _______,    _______,  LT(_LOWER, KC_ENT),LT(_GAME_LOWER, KC_SPC), _______,     _______,    _______,    _______,    _______
     ),
 
     [_GAME_LOWER] = LAYOUT(
