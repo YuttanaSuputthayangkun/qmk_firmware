@@ -176,6 +176,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     }
     // }
 #endif
+
+#ifdef SOCD_ENABLE
+    if(!process_record_user_socd(keycode, record)){
+        return false;
+    }
+#endif
+
     if (!process_keycodes(keycode, record)){
         return false;
     }

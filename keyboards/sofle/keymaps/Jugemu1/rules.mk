@@ -11,6 +11,8 @@ RGBLIGHT_ENABLE = no
 
 SWAP_HANDS_ENABLE = no
 
+SOCD_ENABLE = yes
+
 #  convert to Splinky here
 # https://github.com/qmk/qmk_firmware/blob/master/docs/feature_converters.md
 # https://github.com/qmk/qmk_firmware/issues/18746

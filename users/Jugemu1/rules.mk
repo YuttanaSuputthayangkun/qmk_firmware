@@ -3,6 +3,8 @@ TAP_DANCE_ENABLE = yes
 
 # OLED_ENABLE = yes     # OLED display
 
+# SOCD_ENABLE = yes
+
 SRC += jugemu.c \
 	modes.c	\
 	keycodes.c \
@@ -20,4 +22,8 @@ endif
 
 ifeq ($(strip $(TAP_HOLD_ENABLE)), yes)
 	SRC += tap_hold.c
+endif
+
+ifeq ($(strip $(SOCD_ENABLE)), yes)
+	SRC += socd.c
 endif

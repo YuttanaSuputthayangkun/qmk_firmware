@@ -9,3 +9,5 @@
 #define NO_LOGO_TIMEOUT
 
 #define OLED_BRIGHTNESS 1
+
+#define SOCD_ENABLE

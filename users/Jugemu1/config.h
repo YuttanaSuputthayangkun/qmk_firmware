@@ -29,6 +29,7 @@
 #define EECONFIG_MODE_INDEX (uint8_t *) 19
 #define EECONFIG_COMBO_INDEX (uint8_t *) 20
 #define EECONFIG_TAP_HOLD_INDEX (uint8_t *) 21
+#define EECONFIG_SOCD_INDEX (uint8_t *) 22
 
 #define ARROW_LAYER 2
 

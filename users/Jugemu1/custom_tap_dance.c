@@ -7,6 +7,10 @@
     #include "tap_hold.h"
 #endif
 
+#ifdef SOCD_ENABLE
+    #include "socd.h"
+#endif
+
 void dance_mo1(tap_dance_state_t *state, void *user_data){
     if (state->count >= 4) {
         combo_toggle();
@@ -29,6 +33,11 @@ void dance_modes(tap_dance_state_t *state, void *user_data){
 #ifdef TAP_HOLD_ENABLE
         case 4:
             toggle_tap_hold();
+            break;
+#endif
+#ifdef SOCD_ENABLE
+        case 5:
+            toggle_socd();
             break;
 #endif
         default:

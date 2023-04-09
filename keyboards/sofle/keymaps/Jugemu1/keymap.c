@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "custom_combo.h"
 #include "tap_hold.h"
+#include "socd.h"
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -289,6 +290,22 @@ bool try_write_tap_hold_ln(void){
     return is_enabled;
 }
 
+#ifdef SOCD_ENABLE
+bool try_write_socd(void){
+    static char socd_line[LINE_SIZE];
+    bool is_enabled = is_socd_enabled();
+    if (is_enabled) {
+        snprintf(
+            socd_line,
+            sizeof(socd_line),
+            "SOCD : Enabled"
+        );
+        oled_write_ln(socd_line, false);
+    }
+    return is_enabled;
+}
+#endif
+
 const char *read_mode_name(void){
     static char mode_name_line[LINE_SIZE];
     snprintf(
@@ -380,6 +397,12 @@ bool oled_task_user(void) {
         if(try_write_tap_hold_ln()){
             lines += 1;
         }
+
+#ifdef SOCD_ENABLE
+        if(try_write_socd()){
+            lines += 1;
+        }
+#endif
 
 #ifdef SET_KEYLOG
         if(lines < MAX_LINE) {
