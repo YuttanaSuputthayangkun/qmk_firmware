@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [_ADJUST] = LAYOUT(
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, T_EROGE,T_READING,                   T_BASE, T_GENSH,  T_GAME, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, XXXXXXX,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX,  KC_INS, KC_HOME, KC_PGUP, KC_PSCR,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX,  KC_DEL,  KC_END, KC_PGDN, XXXXXXX,                    KC_DOT, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, XXXXXXX, XXXXXXX,
                                 _______, _______, _______, _______, _______,  _______, _______, _______
@@ -166,11 +166,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_EROGE] = LAYOUT(
-    _______,    _______,  _______,   KC_VOLD,    KC_VOLU,      KC_MUTE,                                   _______,    _______,    _______,    _______,   CK_FPSCR,    _______,
+    _______,    KC_PSCR,  _______,   KC_VOLD,    KC_VOLU,      KC_MUTE,                                   _______,    _______,    _______,    _______,   CK_FPSCR,    _______,
     _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
     _______,    _______,  _______,   _______,    _______,      _______,                                   _______,    _______,    _______,    _______,    _______,    _______,
-    _______,    _______,  _______,   _______,    _______,      _______,   CK_FPSCR ,        T_EROGE,      _______,    _______,    _______,    _______,    _______,    _______,
-                                    _______, _______,  MO(_GAME_LOWER),     KC_ENT,         _______, _______, _______, _______
+    _______,    _______,  _______,   _______,    _______,      _______,   CK_FPSCR,         T_EROGE,      _______,    _______,    _______,    _______,    _______,    _______,
+                                     _______,    _______,      _______,     KC_ENT,         _______,      _______,    _______,    _______
     ),
 
     [_GAME_LOWER] = LAYOUT(
