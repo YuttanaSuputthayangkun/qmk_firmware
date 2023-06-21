@@ -35,11 +35,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       KC_LALT, KC_BTN1, KC_LGUI, MO(_LOWER), KC_SPC,          KC_ENT, MO(_RAISE), KC_BSPC, TG(_GAME_GENSHIN), KC_BTN1
     ),
     [_LOWER] = LAYOUT(
-    _______,          KC_WBAK, KC_WFWD,  KC_WH_L, KC_WH_R, _______,                   _______, _______, _______,_______, _______, _______,
-    KC_F1,              KC_F2,   KC_F3,    KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-    TD(TD_LCTL_GRV),  KC_EXLM,   KC_AT,  KC_HASH,  KC_DLR, KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD,
-    CK_TD_MODE,       KC_BTN1, KC_BTN2,  KC_WH_U, KC_WH_D, KC_BTN3, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
-                               _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______
+    _______,          KC_WBAK, KC_WFWD,  KC_WH_L, KC_WH_R,      _______,                   _______, _______, _______,_______, _______, _______,
+    KC_F1,              KC_F2,   KC_F3,    KC_F4,   KC_F5,        KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
+    TD(TD_LCTL_GRV),  KC_EXLM,   KC_AT,  KC_HASH,  KC_DLR,      KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD,
+    KC_BTN3,          KC_WH_D, KC_WH_U,  KC_BTN2, KC_BTN1,  KC_MS_WH_UP, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
+                               _______,  _______, _______,      _______, _______, _______,  _______, _______, _______, _______
     ),
     [_RAISE] = LAYOUT(
     _______,         _______, _______, _______, _______, _______,                       KC_VOLD, KC_VOLU,TD_AUDIO,CK_PPSCR,  CK_FPSCR,  KC_DEL,
