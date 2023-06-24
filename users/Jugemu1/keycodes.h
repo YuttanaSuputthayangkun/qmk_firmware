@@ -23,6 +23,8 @@ typedef enum {
 
     ARROW_SCLN = LT(ARROW_LAYER, KC_SCLN),         // LT(ARROW_LAYER, KC_SCLN)
 
+    CK_UNREAL_ENGINE_LIVE_CODE,
+
 } custom_keycode;
 
 #define CK_MM CK_MAIN_MOD
@@ -30,6 +32,7 @@ typedef enum {
 #define CK_FPSCR CK_FULL_PRINT_SCREEN
 #define CK_PPSCR CK_PARTIAL_PRINT_SCREEN
 #define CK_TGCMB CK_TG_COMBO
+#define  CK_UE_LC CK_UNREAL_ENGINE_LIVE_CODE
 
 uint16_t get_main_mod(void);
 void tap_switch_language(void);

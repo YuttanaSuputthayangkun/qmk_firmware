@@ -128,6 +128,19 @@ void print_partial_screen_key_press(const keyrecord_t *record){
     }
 }
 
+void open_unreal_engine_live_code(const keyrecord_t *record){
+    if (record->event.pressed)
+    {
+        register_code16(KC_LALT);
+        register_code16(KC_LCTL);
+        register_code16(KC_F11);
+    }else {
+        unregister_code16(KC_F11);
+        unregister_code16(KC_LCTL);
+        unregister_code16(KC_LALT);
+    }
+}
+
 bool process_keycodes(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case CK_MAIN_MOD:
@@ -144,6 +157,9 @@ bool process_keycodes(uint16_t keycode, keyrecord_t *record) {
             return false;
         case CK_PARTIAL_PRINT_SCREEN:
             print_partial_screen_key_press(record);
+            return false;
+        case CK_UNREAL_ENGINE_LIVE_CODE:
+            open_unreal_engine_live_code(record);
             return false;
         default:
             return true;
