@@ -778,28 +778,30 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+static bool combo_status_before_game_layer;
+
 bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
 
-    // if (record->event.pressed) {
-    //     switch (keycode){
-    //         case TG(_GAME_GENSHIN):
-    //             {
-    //                 if (IS_LAYER_ON(_GAME_GENSHIN))
-    //                 {
-    //                     // restore combo status
-    //                     set_custom_combo_enable(combo_status_before_game_layer);
-    //                 } else {
-    //                     // save combo status prior to entering game mode
-    //                     combo_status_before_game_layer = is_custom_combo_enabled();
-    //                     // disable combo
-    //                     set_custom_combo_enable(false);
-    //                 }
-    //             }
-    //             return false;
-    //         default:
-    //             break;
-    //     }
-    // }
+    if (record->event.pressed) {
+        switch (keycode){
+            case TG(_GAME_GENSHIN):
+                {
+                    if (IS_LAYER_ON(_GAME_GENSHIN))
+                    {
+                        // restore combo status
+                        set_custom_combo_enable(combo_status_before_game_layer);
+                    } else {
+                        // save combo status prior to entering game mode
+                        combo_status_before_game_layer = is_custom_combo_enabled();
+                        // disable combo
+                        set_custom_combo_enable(false);
+                    }
+                }
+                return false;
+            default:
+                break;
+        }
+    }
 
     return true;
 }
