@@ -24,6 +24,7 @@ typedef enum {
     TD_LSFT_F7,
     TD_LCTL_GRV,
     TD_RCTL_F1,
+    TD_R1,
 } custom_tap_dance;
 
 // ----------------------- tap_dance header ends
@@ -106,6 +107,8 @@ typedef enum {
 
     CK_TD_MODE = TD(TD_MODE),
     TD_AUDIO = TD(TD_PLAY_MUTE),
+
+    CK_TD_R1 = TD(TD_R1),
 
     CK_MAIN_MOD,
     CK_TG_COMBO,
@@ -526,6 +529,22 @@ void dance_audio(tap_dance_state_t *state, void *user_data){
     }
 }
 
+void dance_qk(tap_dance_state_t *state, void *user_data){
+    if(!state->finished) return;
+    switch(state->count){
+        case 1:
+        case 2:
+        case 3:
+            tap_code(KC_Z);
+            break;
+        case 4:
+            tap_code16(QK_BOOT);
+            break;
+        default:
+            break;
+    }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
     [TD_MODE] = ACTION_TAP_DANCE_FN(dance_modes),
     [TD_PLAY_MUTE] = ACTION_TAP_DANCE_FN(dance_audio),
@@ -533,6 +552,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT_F7] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_F7),
     [TD_LCTL_GRV] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_GRV),
     [TD_RCTL_F1] = ACTION_TAP_DANCE_DOUBLE(KC_RCTL, KC_F1),
+    [TD_R1] = ACTION_TAP_DANCE_FN(dance_qk),
 };
 
 
@@ -557,9 +577,7 @@ void toggle_tap_hold(void){
 }
 
 void init_tap_hold(void){
-    set_tap_hold(
-        tap_hold_enabled()
-    );
+    set_tap_hold(tap_hold_enabled());
 }
 
 bool process_tap_hold(
@@ -733,7 +751,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ),
 
     [_ADJUST] = LAYOUT(
-    XXXXXXX,       XXXXXXX,   XXXXXXX,    XXXXXXX,    XXXXXXX,         XXXXXXX,          XXXXXXX,                 XXXXXXX,        T_BASE,        T_GENSH,        T_GAME,     XXXXXXX,     XXXXXXX,    XXXXXXX,
+    XXXXXXX,       XXXXXXX,   XXXXXXX,    XXXXXXX,    XXXXXXX,         XXXXXXX,          QK_BOOT,                 XXXXXXX,        T_BASE,        T_GENSH,        T_GAME,     XXXXXXX,     XXXXXXX,    XXXXXXX,
     XXXXXXX,       XXXXXXX,   KC_INS,     KC_HOME,    KC_PGUP,         XXXXXXX,          XXXXXXX,                 XXXXXXX,        XXXXXXX,       KC_KP_7,       KC_KP_8,     KC_KP_9,     XXXXXXX,    XXXXXXX,
     XXXXXXX,       XXXXXXX,   KC_DEL,      KC_END,    KC_PGDN,         XXXXXXX,          XXXXXXX,                 XXXXXXX,         KC_DOT,       KC_KP_4,       KC_KP_5,     KC_KP_6,     XXXXXXX,    XXXXXXX,
     XXXXXXX,       XXXXXXX,   XXXXXXX,    XXXXXXX,    XXXXXXX,         XXXXXXX,          XXXXXXX,                 XXXXXXX,        KC_KP_0,       KC_KP_1,       KC_KP_2,     KC_KP_3,     XXXXXXX,    XXXXXXX,
