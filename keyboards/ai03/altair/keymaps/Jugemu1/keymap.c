@@ -784,9 +784,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT(
     KC_ESC,        KC_1,   KC_2,    KC_3,    KC_4,         KC_5,          _______,                 _______,        _______, _______,  _______,   _______,      KC_0,     KC_GRV,
-    KC_TAB,        KC_Q,   KC_W,    KC_E,    KC_R,         KC_T,          _______,                 _______,        KC_Y,       KC_U,      KC_UP,     KC_O,     KC_P,    KC_MINS,
-    KC_LCTL,       KC_A,   KC_S,    KC_D,    KC_F,         KC_G,          _______,                 _______,        KC_H,    KC_LEFT,    KC_DOWN, KC_RIGHT,  KC_SCLN,    KC_QUOT,
-    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,         KC_B,       CK_TD_MODE,       TG(_GAME_GENSHIN),        KC_N,       KC_M,    KC_COMM,   KC_DOT,  KC_SLSH,    KC_RSFT,
+    KC_TAB,        KC_Q,  KC_UP,    KC_E,    KC_R,         KC_T,          _______,                 _______,        KC_Y,       KC_U,      KC_UP,     KC_O,     KC_P,    KC_MINS,
+    KC_LCTL,    KC_LEFT,KC_DOWN,KC_RIGHT,    KC_F,         KC_G,          _______,                 _______,        KC_H,    KC_LEFT,    KC_DOWN, KC_RIGHT,  KC_SCLN,    KC_QUOT,
+    KC_LSFT,       KC_Z,   KC_X,    KC_C,    KC_V,         KC_B,       CK_TD_MODE,                  T_BASE,        KC_N,       KC_M,    KC_COMM,   KC_DOT,  KC_SLSH,    KC_RSFT,
                                  KC_LALT,    KC_LGUI,      MO(_LOWER),     KC_SPC,                  KC_ENT,  MO(_RAISE),    KC_BSPC,    KC_RGUI
     ),
 
