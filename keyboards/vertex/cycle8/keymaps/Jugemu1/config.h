@@ -1,5 +1,7 @@
 #pragma once
 
+#define WS2812_SPI_DRIVER SPID2
+
 // how long before a tap becomes a hold
 #undef TAPPING_TERM
 #define TAPPING_TERM 200
@@ -33,3 +35,9 @@
 #define TAP_HOLD_ENABLE
 
 #define ENABLE_CUSTOM_OLED_BY_DEFAULT
+
+#define DEBUG_MATRIX
+// #define DEBUG_MATRIX_SCAN_RATE
+
+#define BOOTMAGIC_ROW_RIGHT 0
+#define BOOTMAGIC_COLUMN_RIGHT 0
