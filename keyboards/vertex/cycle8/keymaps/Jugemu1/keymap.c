@@ -337,6 +337,7 @@ typedef enum {
     CMB_L_SCLN,             // TODO: remove
     CMB_TH_L_SCLN,
     CMB_L_ARROW_SCLN,
+    CMB_N_K,
     CMB_M_K,
     CMB_M_K_L,
 
@@ -353,6 +354,7 @@ typedef enum {
     CMB_CV,
     CMB_D_V,
     CMB_S_D_V,
+    CMB_D_B,
 
 } custom_combos;
 
@@ -368,6 +370,7 @@ const uint16_t PROGMEM cmb_o_arrow_scln[]   = {KC_O, ARROW_SCLN, COMBO_END};
 const uint16_t PROGMEM cmb_l_scln[]   = {KC_L, KC_SCLN, COMBO_END};                 // TODO: remove
 const uint16_t PROGMEM cmb_th_l_scln[]   = {KC_L, TH(KC_SCLN), COMBO_END};
 const uint16_t PROGMEM cmb_l_arrow_scln[] = {KC_L, ARROW_SCLN, COMBO_END};
+const uint16_t PROGMEM cmb_n_k[] = {KC_N, KC_K, COMBO_END};
 const uint16_t PROGMEM cmb_m_k[] = {KC_M, KC_K, COMBO_END};
 const uint16_t PROGMEM cmb_m_k_l[] = {KC_M, KC_K, KC_L, COMBO_END};
 
@@ -384,6 +387,7 @@ const uint16_t PROGMEM cmb_xc[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM cmb_cv[]   = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM cmb_d_v[]   = {KC_D, KC_V, COMBO_END};
 const uint16_t PROGMEM cmb_s_d_v[]   = {KC_S, KC_D, KC_V, COMBO_END};
+const uint16_t PROGMEM cmb_d_b[]   = {KC_D, KC_B, COMBO_END};
 
 combo_t key_combos[] = {
     // right
@@ -398,6 +402,7 @@ combo_t key_combos[] = {
     [CMB_L_SCLN] = COMBO(cmb_l_scln, KC_BSPC),                  // TODO: remove this
     [CMB_TH_L_SCLN] = COMBO(cmb_th_l_scln, KC_BSPC),
     [CMB_L_ARROW_SCLN] = COMBO(cmb_l_arrow_scln, KC_BSPC),
+    [CMB_N_K] = COMBO_ACTION(cmb_n_k),
     [CMB_M_K] = COMBO_ACTION(cmb_m_k),
     [CMB_M_K_L] = COMBO_ACTION(cmb_m_k_l),
 
@@ -414,6 +419,7 @@ combo_t key_combos[] = {
     [CMB_CV] = COMBO(cmb_cv, KC_ENT),
     [CMB_D_V] = COMBO_ACTION(cmb_d_v),
     [CMB_S_D_V] = COMBO_ACTION(cmb_s_d_v),
+    [CMB_D_B] = COMBO_ACTION(cmb_d_b),
 };
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
@@ -435,13 +441,24 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
 
-        case CMB_M_K:
+        case CMB_N_K:
             {
                 if (pressed) {
                     layer_on(_RAISE);
                 }
                 else {
                     layer_off(_RAISE);
+                }
+            }
+            break;
+
+        case CMB_M_K:
+            {
+                if (pressed) {
+                    layer_on(_LOWER);
+                }
+                else {
+                    layer_off(_LOWER);
                 }
             }
             break;
@@ -464,10 +481,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case CMB_D_V:
             {
                 if (pressed) {
-                    layer_on(_LOWER);
+                    layer_on(_RAISE);
                 }
                 else {
-                    layer_off(_LOWER);
+                    layer_off(_RAISE);
                 }
             }
             break;
@@ -479,6 +496,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
                 else {
                     layer_off(_ADJUST);
+                }
+            }
+            break;
+
+        case CMB_D_B:
+            {
+                if (pressed) {
+                    layer_on(_LOWER);
+                }
+                else {
+                    layer_off(_LOWER);
                 }
             }
             break;
@@ -806,7 +834,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*  ├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────────────────┼───┼───────────┼───────────┼───────────┤ */
                _______,    _______,    _______,     _______,    _______,    _______,   _______,     _______,   _______,    _______,    _______,      _______,    _______,         _______,             _______,    _______,    _______,        //17
         /*  ├───────────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴───────────────────────┼───┼───────────┼───────────┼───────────┤ */
-                    _______,    _______,     _______,     _______,    _______,   _______,    KC_VOLD,    KC_VOLU,  TD_AUDIO,   CK_PPSCR,    CK_FPSCR,     KC_DEL,    _______,    _______,              _______,    _______,    _______,
+                    KC_GRV,      KC_1,       KC_2,        KC_3,      KC_4,       KC_5,        KC_6,       KC_7,       KC_8,       KC_9,       KC_0,     _______,    _______,       _______,            _______,    _______,    _______,
         /*  ├─────────────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴─────────────────┼───┴───────────┴───────────┴───────────┤ */
                 TD(TD_RCTL_F1),      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_F6,    KC_LEFT,    KC_DOWN,     KC_UP,      KC_RGHT,    _______,    KC_VOLD,            _______,
         /*  ├────────────────────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴──────────────────────────┼───────────────┬───────────┬───────────┤ */
