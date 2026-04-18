@@ -330,6 +330,7 @@ typedef enum {
     CMB_J_K_L,
     CMB_JL,
     CMB_KL,
+    CMB_K_L_SCLN,
     CMB_JI,
     CMB_OSCLN,              // TODO: remove
     CMB_TH_O_SCLN,
@@ -343,6 +344,7 @@ typedef enum {
     CMB_M_K_L,
 
     // left
+    CMB_A_S_D,
     CMB_DF,
     CMB_EF,
     CMB_SR,
@@ -365,6 +367,7 @@ const uint16_t PROGMEM cmb_jk[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cmb_j_k_l[] = {KC_J, KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_jl[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_kl[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM cmb_k_l_scln[] = {KC_K, KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM cmb_ji[] = {KC_J, KC_I, COMBO_END};
 const uint16_t PROGMEM cmb_io[]   = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM cmb_oscln[]   = {KC_O, KC_SCLN, COMBO_END};      // TODO: remove this
@@ -378,6 +381,7 @@ const uint16_t PROGMEM cmb_m_k[] = {KC_M, KC_K, COMBO_END};
 const uint16_t PROGMEM cmb_m_k_l[] = {KC_M, KC_K, KC_L, COMBO_END};
 
 // left
+const uint16_t PROGMEM cmb_a_s_d[]   = {KC_A, KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_df[]   = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_ef[]   = {KC_E, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_sr[]   = {KC_S, KC_R, COMBO_END};
@@ -399,6 +403,7 @@ combo_t key_combos[] = {
     [CMB_J_K_L] = COMBO_ACTION(cmb_j_k_l),
     [CMB_JL] = COMBO(cmb_jl, KC_LALT),
     [CMB_KL] = COMBO(cmb_kl, KC_LGUI),
+    [CMB_K_L_SCLN] = COMBO_ACTION(cmb_k_l_scln),
     [CMB_JI] = COMBO(cmb_ji, KC_RSFT),
     [CMB_IO] = COMBO(cmb_io, KC_BSPC),
     [CMB_OSCLN] = COMBO(cmb_oscln, KC_ENT),
@@ -412,6 +417,7 @@ combo_t key_combos[] = {
     [CMB_M_K_L] = COMBO_ACTION(cmb_m_k_l),
 
     // left
+    [CMB_A_S_D] = COMBO_ACTION(cmb_a_s_d),
     [CMB_DF] = COMBO(cmb_df, KC_LCTL),
     [CMB_EF] = COMBO(cmb_ef, KC_LSFT),
     [CMB_SR] = COMBO_ACTION(cmb_sr),
@@ -434,6 +440,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
 
         // ------- left start ------
+        case CMB_A_S_D:
+            {
+                if (pressed) {
+                    layer_on(_ADJUST);
+                }
+                else {
+                    layer_off(_ADJUST);
+                }
+            }
+            break;
+
         case CMB_SR:
             // LSFT + TAB
             if (pressed) {
@@ -498,6 +515,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 }
                 else {
                     layer_off(_RAISE);
+                }
+            }
+            break;
+
+        case CMB_K_L_SCLN:
+            {
+                if (pressed) {
+                    layer_on(_ADJUST);
+                }
+                else {
+                    layer_off(_ADJUST);
                 }
             }
             break;
