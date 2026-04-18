@@ -327,6 +327,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 typedef enum {
     // right
     CMB_JK,
+    CMB_J_K_L,
     CMB_JL,
     CMB_KL,
     CMB_JI,
@@ -347,6 +348,7 @@ typedef enum {
     CMB_SR,
     CMB_SF,
     CMB_SD,
+    CMB_S_D_F,
     // CMB_AF,
     CMB_AS,
     CMB_AW,
@@ -360,6 +362,7 @@ typedef enum {
 
 // right
 const uint16_t PROGMEM cmb_jk[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM cmb_j_k_l[] = {KC_J, KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_jl[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_ji[] = {KC_J, KC_I, COMBO_END};
@@ -380,6 +383,7 @@ const uint16_t PROGMEM cmb_ef[]   = {KC_E, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_sr[]   = {KC_S, KC_R, COMBO_END};
 const uint16_t PROGMEM cmb_sf[]   = {KC_S, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_sd[]   = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM cmb_s_d_f[]   = {KC_S, KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_as[]   = {KC_A, KC_S, COMBO_END};
 // const uint16_t PROGMEM cmb_af[]   = {KC_A, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_aw[]   = {KC_A, KC_W, COMBO_END};
@@ -392,6 +396,7 @@ const uint16_t PROGMEM cmb_d_b[]   = {KC_D, KC_B, COMBO_END};
 combo_t key_combos[] = {
     // right
     [CMB_JK] = COMBO(cmb_jk, KC_LCTL),
+    [CMB_J_K_L] = COMBO_ACTION(cmb_j_k_l),
     [CMB_JL] = COMBO(cmb_jl, KC_LALT),
     [CMB_KL] = COMBO(cmb_kl, KC_LGUI),
     [CMB_JI] = COMBO(cmb_ji, KC_RSFT),
@@ -412,6 +417,7 @@ combo_t key_combos[] = {
     [CMB_SR] = COMBO_ACTION(cmb_sr),
     [CMB_SF] = COMBO(cmb_sf, KC_TAB),
     [CMB_SD] = COMBO(cmb_sd, KC_LGUI),
+    [CMB_S_D_F] = COMBO_ACTION(cmb_s_d_f),
     [CMB_AS] = COMBO(cmb_as, CK_MAIN_MOD),
     // [CMB_AF] = COMBO(cmb_af, KC_TAB),
     [CMB_AW] = COMBO(cmb_aw, KC_ESC),
@@ -441,6 +447,18 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
 
+        case CMB_S_D_F:
+            {
+                if (pressed) {
+                    layer_on(_RAISE);
+                }
+                else {
+                    layer_off(_RAISE);
+                }
+            }
+            break;
+
+
         case CMB_N_K:
             {
                 if (pressed) {
@@ -465,12 +483,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case CMB_M_K_L:
             {
-                if (pressed) {
-                    layer_on(_ADJUST);
-                }
-                else {
-                    layer_off(_ADJUST);
-                }
+                // TODO: implement some functionality
             }
             break;
 
@@ -478,7 +491,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         // ------- right start ------
 
-        case CMB_D_V:
+        case CMB_J_K_L:
             {
                 if (pressed) {
                     layer_on(_RAISE);
@@ -489,18 +502,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
 
-        case CMB_S_D_V:
-            {
-                if (pressed) {
-                    layer_on(_ADJUST);
-                }
-                else {
-                    layer_off(_ADJUST);
-                }
-            }
-            break;
-
-        case CMB_D_B:
+        case CMB_D_V:
             {
                 if (pressed) {
                     layer_on(_LOWER);
@@ -508,6 +510,18 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 else {
                     layer_off(_LOWER);
                 }
+            }
+            break;
+
+        case CMB_S_D_V:
+            {
+                // TODO: implement some functionality
+            }
+            break;
+
+        case CMB_D_B:
+            {
+                // TODO: implement some functionality
             }
             break;
 
@@ -766,7 +780,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*  ┌───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬─────┬───────────┬───────────┬───────────┬───────────┬─────┬───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬───────────┐ */
                 KC_ESC,                  KC_F1,     KC_F2,      KC_F3,      KC_F4,            KC_F5,      KC_F6,      KC_F7,      KC_F8,            KC_F9,     KC_F10,     KC_F11,      KC_F12,       CK_PPSCR,   CK_FPSCR,   TD_AUDIO,       //16
         /*  ├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────┬───────────────────────┼───┼───────────┼───────────┼───────────┤ */
-               KC_GRAVE,    KC_1,       KC_2,        KC_3,       KC_4,       KC_5,      KC_6,        KC_7,      KC_8,       KC_9,       KC_0,      KC_MINS,     KC_EQL,         KC_BSPC,                KC_INS,    KC_HOME,    KC_VOLU,        //17
+               KC_ESC,      KC_1,       KC_2,        KC_3,       KC_4,       KC_5,      KC_6,        KC_7,      KC_8,       KC_9,       KC_0,      KC_MINS,     KC_EQL,         KC_BSPC,                KC_INS,    KC_HOME,    KC_VOLU,        //17
         /*  ├───────────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┴───────────────────────┼───┼───────────┼───────────┼───────────┤ */
                 KC_TAB,           KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       KC_Y,       KC_U,       KC_I,       KC_O,       KC_P,      KC_LBRC,   KC_RBRC,      KC_BSLS,              KC_DEL,    KC_END,     KC_VOLD,        //17
         /*  ├─────────────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴──┬────────┴─────────────────┼───┴───────────┴───────────┴───────────┤ */
