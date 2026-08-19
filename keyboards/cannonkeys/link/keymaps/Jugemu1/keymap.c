@@ -699,7 +699,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    KC_TAB,       KC_Q,      KC_W,       KC_E,       KC_R,        KC_T,                                  KC_Y,       KC_U,       KC_I,        KC_O,       KC_P,       KC_BSPC,
   KC_LCTL,       KC_A,      KC_S,       KC_D,       KC_F,        KC_G,                                  KC_H,       KC_J,       KC_K,        KC_L,    KC_SCLN,       KC_QUOT,
   KC_LSFT,       KC_Z,      KC_X,       KC_C,       KC_V,        KC_B,  CK_TD_MODE, TG(_GAME_GENSHIN),  KC_N,       KC_M,    KC_COMM,      KC_DOT,    KC_SLSH,       KC_PIPE,
-              KC_LGUI,   KC_LALT,    KC_LGUI, MO(_LOWER),      KC_SPC,                                KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI,    KC_RGUI
+              KC_LALT,    KC_LGUI, MO(_LOWER),    KC_SPC,  CK_TD_MODE,                         TG(_GAME_GENSHIN),  KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI
 ),
 
 // [_LOWER] = LAYOUT(
@@ -715,7 +715,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F1,         KC_F2,        KC_F3,         KC_F4,         KC_F5,          KC_F6,                                    KC_F7,         KC_F8,        KC_F9,         KC_F10,        KC_F11,        KC_F12,
 TD(TD_LCTL_GRV), KC_EXLM,        KC_AT,       KC_HASH,        KC_DLR,        KC_PERC,                                  KC_CIRC,       KC_AMPR,      KC_ASTR,        KC_LPRN,       KC_RPRN,       KC_TILD,
   _______,       _______,      _______,       _______,       _______,        _______,      _______,     _______,       XXXXXXX,       KC_UNDS,      KC_PLUS,        KC_LCBR,       KC_RCBR,       KC_PIPE,
-                 _______,      _______,       _______,         MO(1),        _______,                                  _______,         MO(2),      _______,        _______,       _______
+                 _______,      _______,       _______,       _______,        _______,                                  _______,       _______,  MO(_ADJUST),        MS_WHLU,       MS_WHLD
 ),
 
 // [_RAISE] = LAYOUT(
@@ -731,7 +731,7 @@ TD(TD_LCTL_GRV), KC_EXLM,        KC_AT,       KC_HASH,        KC_DLR,        KC_
           KC_GRV,       KC_1,      KC_2,       KC_3,       KC_4,        KC_5,                                      KC_6,          KC_7,       KC_8,        KC_9,       KC_0,       KC_VOLU,
   TD(TD_RCTL_F1),      KC_F2,     KC_F3,      KC_F4,      KC_F5,       KC_F6,                                   KC_LEFT,       KC_DOWN,      KC_UP,     KC_RGHT,    _______,       KC_VOLD,
   TD(TD_LSFT_F7),      KC_F8,     KC_F9,     KC_F10,     KC_F11,      KC_F12,     _______,      _______,        KC_PLUS,       KC_MINS,     KC_EQL,     KC_LBRC,    KC_RBRC,       KC_BSLS,
-                     _______,   _______,    _______,    _______,     _______,                                   _______,       _______,      _______,   _______,    _______
+                     _______,   _______,MO(_ADJUST),    _______,     _______,                                   _______,       _______,      _______,   _______,    _______
 ),
 
 // [_ADJUST] = LAYOUT(
@@ -743,10 +743,10 @@ TD(TD_LCTL_GRV), KC_EXLM,        KC_AT,       KC_HASH,        KC_DLR,        KC_
 // ),
 
 [_ADJUST] = LAYOUT(
-  XXXXXXX,       XXXXXXX,      XXXXXXX,       XXXXXXX,       XXXXXXX,        XXXXXXX,                                   KC_NUM,        T_BASE,      T_GENSH,         T_GAME,       XXXXXXX,       XXXXXXX,
-  XXXXXXX,       XXXXXXX,       KC_INS,       KC_HOME,       KC_PGUP,        XXXXXXX,                                  KC_PSCR,       XXXXXXX,      KC_KP_7,        KC_KP_8,       KC_KP_9,       XXXXXXX,
-  XXXXXXX,       XXXXXXX,       KC_DEL,        KC_END,       KC_PGDN,        XXXXXXX,                                  KC_SCRL,        KC_DOT,      KC_KP_4,        KC_KP_5,       KC_KP_6,       XXXXXXX,
-  XXXXXXX,       XXXXXXX,      XXXXXXX,       XXXXXXX,       XXXXXXX,        XXXXXXX,      QK_BOOT,     XXXXXXX,       KC_PAUS,       KC_KP_0,      KC_KP_1,        KC_KP_2,       KC_KP_3,       XXXXXXX,
+  XXXXXXX,       XXXXXXX,      XXXXXXX,       XXXXXXX,       XXXXXXX,        QK_BOOT,                                   KC_NUM,        T_BASE,      T_GENSH,         T_GAME,       XXXXXXX,       XXXXXXX,
+  XXXXXXX,       XXXXXXX,       KC_INS,       KC_HOME,       KC_PGUP,        KC_PSCR,                                  KC_PSCR,       KC_KP_7,      KC_KP_8,        KC_KP_9,       XXXXXXX,       XXXXXXX,
+  XXXXXXX,       XXXXXXX,       KC_DEL,        KC_END,       KC_PGDN,        KC_SCRL,                                   KC_DOT,       KC_KP_4,      KC_KP_5,        KC_KP_6,       XXXXXXX,       XXXXXXX,
+  XXXXXXX,       XXXXXXX,      XXXXXXX,       XXXXXXX,       XXXXXXX,        KC_PAUS,      QK_BOOT,     XXXXXXX,       KC_KP_0,       KC_KP_1,      KC_KP_2,        KC_KP_3,       XXXXXXX,       XXXXXXX,
                  _______,      _______,       _______,       _______,        _______,                                  _______,       _______,      _______,        _______,       _______
 ),
 
@@ -755,7 +755,7 @@ TD(TD_LCTL_GRV), KC_EXLM,        KC_AT,       KC_HASH,        KC_DLR,        KC_
    KC_TAB,       KC_Q,      KC_W,       KC_E,       KC_R,        KC_T,                                  KC_Y,       KC_U,       KC_I,        KC_O,       KC_P,       KC_BSPC,
   KC_LCTL,       KC_A,      KC_S,       KC_D,       KC_F,        KC_G,                                  KC_H,       KC_J,       KC_K,        KC_L,    KC_SCLN,       KC_QUOT,
   KC_LSFT,       KC_Z,      KC_X,       KC_C,       KC_V,        KC_B, CK_TD_MODE,  TG(_GAME_GENSHIN),  KC_N,       KC_M,    KC_COMM,      KC_DOT,    KC_SLSH,       KC_PIPE,
-              KC_LGUI,   KC_LALT,    KC_LGUI, MO(_LOWER),      KC_SPC,                                KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI,    KC_RGUI
+              KC_LALT,    KC_LGUI, MO(_LOWER),    KC_SPC,  CK_TD_MODE,                         TG(_GAME_GENSHIN),  KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI
 ),
 
 [_GAME] = LAYOUT(
@@ -763,7 +763,7 @@ TD(TD_LCTL_GRV), KC_EXLM,        KC_AT,       KC_HASH,        KC_DLR,        KC_
    KC_TAB,       KC_Q,      KC_W,       KC_E,       KC_R,        KC_T,                                  KC_Y,       KC_U,       KC_I,        KC_O,       KC_P,       KC_BSPC,
   KC_LCTL,       KC_A,      KC_S,       KC_D,       KC_F,        KC_G,                                  KC_H,       KC_J,       KC_K,        KC_L,    KC_SCLN,       KC_QUOT,
   KC_LSFT,       KC_Z,      KC_X,       KC_C,       KC_V,        KC_B, CK_TD_MODE,  TG(_GAME_GENSHIN),  KC_N,       KC_M,    KC_COMM,      KC_DOT,    KC_SLSH,       KC_PIPE,
-              KC_LGUI,   KC_LALT,    KC_LGUI, MO(_LOWER),      KC_SPC,                                KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI,    KC_RGUI
+              KC_LALT,    KC_LGUI, MO(_LOWER),    KC_SPC,  CK_TD_MODE,                         TG(_GAME_GENSHIN),  KC_ENT, MO(_RAISE),    KC_BSPC,     KC_RGUI
 ),
 
 };
@@ -1203,3 +1203,22 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
 
     return true;
 }
+
+#ifdef ENCODER_ENABLE
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {
+        if (clockwise) {
+            tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
+        }
+    } else if (index == 1) {
+        if (clockwise) {
+            tap_code(MS_WHLU);
+        } else {
+            tap_code(MS_WHLD);
+        }
+    }
+    return true;
+}
+#endif
