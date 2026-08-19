@@ -33,3 +33,22 @@
 #define TAP_HOLD_ENABLE
 
 #define ENABLE_CUSTOM_OLED_BY_DEFAULT
+
+
+// OLED
+
+#define IS_LEFT
+
+#define RENDER_LOGO
+#define LOGO_START_DURATION 10000
+// #define NO_LOGO_TIMEOUT
+// #define SET_KEYLOG
+
+// #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
+
+#undef ARROW_LAYER
+#define ARROW_LAYER 2
+
+#define OLED_BRIGHTNESS 8
+#define OLED_TIMEOUT 60000
+#define OLED_FADE_OUT
