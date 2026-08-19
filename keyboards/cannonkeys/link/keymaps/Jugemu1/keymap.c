@@ -1029,9 +1029,30 @@ bool try_render_logo(void){
 }
 #endif
 
+#ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
+uint16_t interaction_timer = 0;
+
+void reset_interaction_timer(void){
+    interaction_timer = timer_read();
+}
+
+bool is_interaction_timeout(void){
+    return timer_elapsed(interaction_timer) > INTERACTION_TIMEOUT_DURATION;
+}
+#endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
+
 #define MAX_LINE 6
 
 bool oled_task_user(void) {
+
+#ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
+    if (is_oled_on() && is_interaction_timeout()) {
+        oled_clear();
+        oled_off();
+        return true;
+    }
+#endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
+
     if (is_keyboard_master()) {
 
 #ifdef RENDER_LOGO
@@ -1101,6 +1122,8 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
     reset_logo_timer();
 #endif
 #endif
+
+    reset_interaction_timer();
 
     if (record->event.pressed) {
         switch (keycode){
