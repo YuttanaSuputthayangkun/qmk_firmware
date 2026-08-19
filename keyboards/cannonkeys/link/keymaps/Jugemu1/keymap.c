@@ -1066,10 +1066,13 @@ bool oled_task_user(void) {
         }
 #endif
 
+#ifdef RENDER_LOGO
         if(lines < MAX_LINE) {
             write_logo_timer_elapsed();
             lines += 1;
         }
+#endif
+
     }
     else {
 #ifdef RENDER_LOGO
@@ -1094,9 +1097,9 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
     set_keylog(keycode, record);
 #endif
 
-// #ifdef RENDER_LOGO
+#ifdef RENDER_LOGO
     reset_logo_timer();
-// #endif
+#endif
 #endif
 
     if (record->event.pressed) {
