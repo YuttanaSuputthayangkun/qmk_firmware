@@ -880,8 +880,13 @@ const char *read_mode_name(void){
 #ifdef RENDER_LOGO
 
 void oled_render_logo(void) {
-    const char *logo = get_logo(LOGO_TYPE);
-    oled_write_raw_P(logo, logo_size);
+    if (is_keyboard_master()) {
+        const char *logo = get_logo(LOGO_TYPE_LEFT);
+        oled_write_raw_P(logo, logo_size);
+    } else {
+        const char *logo = get_logo(LOGO_TYPE_RIGHT);
+        oled_write_raw_P(logo, logo_size);
+    }
 }
 
 uint32_t logo_timer = 0;
