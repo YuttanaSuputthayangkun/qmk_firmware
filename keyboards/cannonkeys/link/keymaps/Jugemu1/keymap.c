@@ -62,11 +62,11 @@ volatile modes current_mode = MODE_WINDOWS;
 const char *get_current_mode_name(void){
     switch(current_mode){
         case MODE_WINDOWS:
-            return "Windows";
+            return "Win";
         case MODE_MAC:
             return "Mac";
         default:
-            return "Unknown";
+            return "Unkn";
     }
 }
 
@@ -779,9 +779,10 @@ static bool combo_status_before_game_layer;
 #ifdef OLED_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_270;
-  return OLED_ROTATION_90;
+//   if (!is_keyboard_master())
+//     return OLED_ROTATION_270;
+//   return OLED_ROTATION_90;
+    return rotation;
 }
 
 // When you add source files to SRC in rules.mk, you can use functions.
@@ -826,7 +827,7 @@ void write_layer_ln(void){
     snprintf(
         layer_line,
         LINE_SIZE,
-        "Layer : %s",
+        "Layer:\n- %s",
         layer_name
     );
     oled_write_ln(layer_line, false);
@@ -837,10 +838,11 @@ bool try_write_combo_ln(void){
     static char combo_line[LINE_SIZE];
     bool is_enabled = is_combo_enabled();
     if (is_enabled) {
+        oled_write_P(PSTR("\n"), false);
         snprintf(
             combo_line,
             sizeof(combo_line),
-            "Combo : Enabled"
+            "Combo: /"
         );
         oled_write_ln(combo_line, false);
     }
@@ -851,10 +853,11 @@ bool try_write_tap_hold_ln(void){
     static char tap_hold_line[LINE_SIZE];
     bool is_enabled = tap_hold_enabled();
     if (is_enabled) {
+        oled_write_P(PSTR("\n"), false);
         snprintf(
             tap_hold_line,
             sizeof(tap_hold_line),
-            "TapHold : Enabled"
+            "TapHold: /"
         );
         oled_write_ln(tap_hold_line, false);
     }
@@ -863,10 +866,11 @@ bool try_write_tap_hold_ln(void){
 
 const char *read_mode_name(void){
     static char mode_name_line[LINE_SIZE];
+    oled_write_P(PSTR("\n"), false);
     snprintf(
         mode_name_line,
         sizeof(mode_name_line),
-        "Mode : %s",
+        "Mode:\n- %s",
         get_current_mode_name()
     );
     return mode_name_line;
@@ -998,7 +1002,7 @@ void write_logo_timer_elapsed(void){
     snprintf(
         timer_line,
         LINE_SIZE,
-        "Timer : %d / %d",
+        "Timer:\n%d / %d",
         elapsed,
         LOGO_START_DURATION
     );
@@ -1082,6 +1086,7 @@ bool oled_task_user(void) {
 
 #ifdef SET_KEYLOG
         if(lines < MAX_LINE) {
+            oled_write_P(PSTR("\n"), false);
             oled_write_ln(read_keylog(), false);
             lines += 1;
         }
@@ -1089,6 +1094,7 @@ bool oled_task_user(void) {
 
 #ifdef RENDER_LOGO
         if(lines < MAX_LINE) {
+            oled_write_P(PSTR("\n"), false);
             write_logo_timer_elapsed();
             lines += 1;
         }
@@ -1104,7 +1110,6 @@ bool oled_task_user(void) {
         oled_clear();
         oled_off();
 #endif
-        return true;
     }
 
     return false;
@@ -1123,7 +1128,9 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
 #endif
 #endif
 
+#ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
     reset_interaction_timer();
+#endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
 
     if (record->event.pressed) {
         switch (keycode){
