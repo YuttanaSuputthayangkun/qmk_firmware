@@ -56,6 +56,6 @@
 #undef ARROW_LAYER
 #define ARROW_LAYER 2
 
-#define OLED_BRIGHTNESS 10
+#define OLED_BRIGHTNESS 60
 // #define OLED_TIMEOUT 60000
 // #define OLED_FADE_OUT
