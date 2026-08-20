@@ -900,7 +900,7 @@ void write_logo_timer_elapsed(void){
 }
 
 void reset_logo_timer(void){
-    logo_timer = timer_read();
+    logo_timer = timer_read32();
     is_rendering_logo = false;
 }
 
@@ -927,14 +927,14 @@ uint32_t interaction_timer = 0;
 bool is_interaction_timeout = false;
 
 void reset_interaction_timer(void){
-    interaction_timer = timer_read();
+    interaction_timer = timer_read32();
     is_interaction_timeout = false;
 }
 
 bool try_interaction_timeout(void){
     if (
         is_interaction_timeout   // if it's rendering, keep do it without checking time
-        || timer_elapsed(interaction_timer) > INTERACTION_TIMEOUT_DURATION
+        || timer_elapsed32(interaction_timer) > INTERACTION_TIMEOUT_DURATION
     ) {
 #ifdef NO_LOGO_TIMEOUT
         oled_clear();
@@ -1026,11 +1026,11 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record){
 #ifdef RENDER_LOGO
     reset_logo_timer();
 #endif
-#endif
 
 #ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
     reset_interaction_timer();
 #endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
+#endif
 
     if (record->event.pressed) {
         switch (keycode){
