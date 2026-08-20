@@ -884,18 +884,17 @@ void oled_render_logo(void) {
     oled_write_raw_P(logo, logo_size);
 }
 
-uint16_t logo_timer = 0;
+uint32_t logo_timer = 0;
 bool is_rendering_logo = false;
 
 void write_logo_timer_elapsed(void){
     static char timer_line[LINE_SIZE];
-    int elapsed = timer_elapsed(logo_timer);
+    uint32_t elapsed = timer_elapsed32(logo_timer);
     snprintf(
         timer_line,
         LINE_SIZE,
-        "Timer:\n%d / %d",
-        elapsed,
-        LOGO_START_DURATION
+        "Timer:\n%" PRIu32,
+        elapsed
     );
     oled_write_ln(timer_line, false);
 }
@@ -908,7 +907,7 @@ void reset_logo_timer(void){
 bool try_render_logo(void){
     if (
         is_rendering_logo                                       // if it's rendering, keep do it without checking time
-        || timer_elapsed(logo_timer) > LOGO_START_DURATION
+        || timer_elapsed32(logo_timer) > LOGO_START_DURATION
     ) {
 #ifdef NO_LOGO_TIMEOUT
         oled_clear();
@@ -924,7 +923,7 @@ bool try_render_logo(void){
 #endif
 
 #ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
-uint16_t interaction_timer = 0;
+uint32_t interaction_timer = 0;
 bool is_interaction_timeout = false;
 
 void reset_interaction_timer(void){
