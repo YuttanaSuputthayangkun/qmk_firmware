@@ -44,6 +44,7 @@
 
 #define RENDER_LOGO
 #define LOGO_START_DURATION 10000
+#define LOGO_TYPE logo_type_ougi_1      // refered to enum in oled_logo.c
 // #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
 
 // logo resources:
