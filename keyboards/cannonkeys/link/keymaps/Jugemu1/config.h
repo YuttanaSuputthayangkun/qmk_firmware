@@ -44,9 +44,13 @@
 
 #define RENDER_LOGO
 #define LOGO_START_DURATION 10000
-// #define SET_KEYLOG
-
 // #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
+
+// logo resources:
+// https://javl.github.io/image2cpp
+// https://docs.splitkb.com/product-guides/oled-displays
+// https://joric.github.io/qle
+// https://www.toolpkg.com/dither
 
 #undef ARROW_LAYER
 #define ARROW_LAYER 2
