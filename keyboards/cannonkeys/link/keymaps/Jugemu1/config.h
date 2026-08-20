@@ -37,15 +37,15 @@
 #define ENCODER_RESOLUTIOns_left { 1, 1 }
 #define ENCODER_RESOLUTIONS_RIGHT { 1, 1 }
 
-// #define ENABLE_CUSTOM_INTERACTION_TIMEOUT
-// #define INTERACTION_TIMEOUT_DURATION 10000
-
 // OLED
 
 #define RENDER_LOGO
 #define LOGO_START_DURATION 10000
 #define LOGO_TYPE logo_type_ougi_1      // refered to enum in oled_logo.c
 // #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
+
+#define ENABLE_CUSTOM_INTERACTION_TIMEOUT
+#define INTERACTION_TIMEOUT_DURATION 60000
 
 // logo resources:
 // https://javl.github.io/image2cpp
@@ -56,6 +56,6 @@
 #undef ARROW_LAYER
 #define ARROW_LAYER 2
 
-#define OLED_BRIGHTNESS 8
-#define OLED_TIMEOUT 60000
-#define OLED_FADE_OUT
+#define OLED_BRIGHTNESS 10
+// #define OLED_TIMEOUT 60000
+// #define OLED_FADE_OUT

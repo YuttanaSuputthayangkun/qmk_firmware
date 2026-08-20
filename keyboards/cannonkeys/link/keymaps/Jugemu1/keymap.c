@@ -880,13 +880,6 @@ const char *read_mode_name(void){
 #ifdef RENDER_LOGO
 
 void oled_render_logo(void) {
-    // if (is_keyboard_master()) {
-    //     oled_write_P(left_logo, sizeof(left_logo));
-    // }
-    // else {
-    //     oled_write_P(right_logo, sizeof(right_logo));
-    // }
-
     const char *logo = get_logo(LOGO_TYPE);
     oled_write_raw_P(logo, logo_size);
 }
@@ -933,13 +926,28 @@ bool try_render_logo(void){
 
 #ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
 uint16_t interaction_timer = 0;
+bool is_interaction_timeout = false;
 
 void reset_interaction_timer(void){
     interaction_timer = timer_read();
+    is_interaction_timeout = false;
 }
 
-bool is_interaction_timeout(void){
-    return timer_elapsed(interaction_timer) > INTERACTION_TIMEOUT_DURATION;
+bool try_interaction_timeout(void){
+    if (
+        is_interaction_timeout   // if it's rendering, keep do it without checking time
+        || timer_elapsed(interaction_timer) > INTERACTION_TIMEOUT_DURATION
+    ) {
+#ifdef NO_LOGO_TIMEOUT
+        oled_clear();
+#endif
+        oled_clear();
+        oled_off();
+
+        is_interaction_timeout = true;
+        return true;
+    }
+    return false;
 }
 #endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
 
@@ -948,10 +956,8 @@ bool is_interaction_timeout(void){
 bool oled_task_user(void) {
 
 #ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
-    if (is_oled_on() && is_interaction_timeout()) {
-        oled_clear();
-        oled_off();
-        return true;
+    if (try_interaction_timeout()) {
+        return false;
     }
 #endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
 
