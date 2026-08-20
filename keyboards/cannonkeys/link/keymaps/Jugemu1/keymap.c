@@ -62,11 +62,11 @@ volatile modes current_mode = MODE_WINDOWS;
 const char *get_current_mode_name(void){
     switch(current_mode){
         case MODE_WINDOWS:
-            return "Win";
+            return "Windows";
         case MODE_MAC:
             return "Mac";
         default:
-            return "Unkn";
+            return "Unknown";
     }
 }
 
