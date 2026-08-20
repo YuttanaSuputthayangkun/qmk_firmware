@@ -914,8 +914,7 @@ bool try_render_logo(void){
         oled_clear();
 #endif
         oled_clear();
-        oled_render_logo();  // TODO: turn on after setting new artwork
-        // oled_off();
+        oled_render_logo();  
 
         is_rendering_logo = true;
         return true;
@@ -1010,9 +1009,7 @@ bool oled_task_user(void) {
 #ifdef NO_LOGO_TIMEOUT
         oled_clear();
 #endif
-        // oled_render_logo();  // TODO: turn on after setting new artwork
-        oled_clear();
-        oled_off();
+        oled_render_logo();  
 #endif
     }
 
