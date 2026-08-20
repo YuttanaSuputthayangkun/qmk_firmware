@@ -893,7 +893,7 @@ void write_logo_timer_elapsed(void){
     snprintf(
         timer_line,
         LINE_SIZE,
-        "Timer:\n%" PRIu32,
+        "Timer:\n- %" PRIu32,
         elapsed
     );
     oled_write_ln(timer_line, false);
