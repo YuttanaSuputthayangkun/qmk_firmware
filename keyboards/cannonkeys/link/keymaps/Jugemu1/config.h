@@ -45,7 +45,7 @@
 // #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
 
 #define ENABLE_CUSTOM_INTERACTION_TIMEOUT
-#define INTERACTION_TIMEOUT_DURATION 60000
+#define INTERACTION_TIMEOUT_DURATION 180000
 
 // logo resources:
 // https://javl.github.io/image2cpp
