@@ -884,7 +884,11 @@ void oled_render_logo(void) {
         const char *logo = get_logo(LOGO_TYPE_LEFT);
         oled_write_raw_P(logo, logo_size);
     } else {
+#ifdef LOGO_TYPES_RIGHT_CYCLE
+        const char *logo = get_logo_type_right_cycle();
+#elif   // not LOGO_TYPES_RIGHT_CYCLE
         const char *logo = get_logo(LOGO_TYPE_RIGHT);
+#endif  // LOGO_TYPES_RIGHT_CYCLE
         oled_write_raw_P(logo, logo_size);
     }
 }

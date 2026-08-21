@@ -86,3 +86,39 @@ const char *get_logo(logo_type type)
 {
     return logo_array[type];
 }
+
+#ifdef LOGO_TYPES_RIGHT_CYCLE
+
+static logo_type logo_type_right_cycle_array[] = {
+    LOGO_TYPES_RIGHT_CYCLE 
+};
+
+uint8_t logo_type_right_cycle_array_length = sizeof(logo_type_right_cycle_array) / sizeof(logo_type);
+uint8_t logo_type_right_cycle_array_index = 0;
+uint32_t logo_type_right_cycle_array_last_update_timer = 0;
+
+static const char* const get_logo_type_right_cycle_current(void) {
+    return get_logo(logo_type_right_cycle_array[logo_type_right_cycle_array_index]);
+}
+
+static const char* const get_logo_type_right_cycle(void) {
+    // check timer, if not timeout, use current logo
+    uint32_t current_time = timer_read32();
+    bool is_time_out = timer_elapsed32(logo_type_right_cycle_array_last_update_timer) >= LOGO_TYPES_RIGHT_CYCLE_INTERVAL_DURATION;
+    if (!is_time_out) {
+        return get_logo_type_right_cycle_current();
+    }
+
+    // update timer
+    logo_type_right_cycle_array_last_update_timer = current_time;
+
+    // go to next index, cycle of exceeds
+    logo_type_right_cycle_array_index++;
+    if (logo_type_right_cycle_array_index >= logo_type_right_cycle_array_length) {
+        logo_type_right_cycle_array_index = 0;
+    }
+
+    return get_logo_type_right_cycle_current();
+}
+
+#endif  // LOGO_TYPES_RIGHT_CYCLE
