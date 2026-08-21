@@ -962,13 +962,13 @@ bool try_interaction_timeout(void){
 
 bool oled_task_user(void) {
 
+    if (is_keyboard_master()) {
+
 #ifdef ENABLE_CUSTOM_INTERACTION_TIMEOUT
     if (try_interaction_timeout()) {
         return false;
     }
 #endif // ENABLE_CUSTOM_INTERACTION_TIMEOUT
-
-    if (is_keyboard_master()) {
 
 #ifdef RENDER_LOGO
         if(try_render_logo()){
