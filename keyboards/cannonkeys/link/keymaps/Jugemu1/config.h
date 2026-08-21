@@ -44,7 +44,17 @@
 #define LOGO_TYPE_LEFT logo_type_yukari_1      // refered to enum in oled_logo.c
 #define LOGO_TYPE_RIGHT logo_type_reimu_1      // refered to enum in oled_logo.c
 
-#define LOGO_TYPES_RIGHT_CYCLE logo_type_reimu_1, logo_type_yukari_1
+#define LOGO_TYPES_RIGHT_CYCLE logo_type_ghost_1, \
+    logo_type_ghost_2, \
+    logo_type_ghost_3, \
+    logo_type_ghost_4, \
+    logo_type_ghost_5, \
+    logo_type_ghost_6, \
+    logo_type_ghost_7, \
+    logo_type_ghost_8, \
+    logo_type_ghost_9, \
+    logo_type_ghost_10
+
 #define LOGO_TYPES_RIGHT_CYCLE_INTERVAL_DURATION 10000
 
 // #define SET_KEYLOG defined(OLED_ENABLE) && defined(DEBUG_OLED_ENABLE)
